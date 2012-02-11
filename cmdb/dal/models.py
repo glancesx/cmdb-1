@@ -2,21 +2,19 @@ from django.db import models
 
 # Create your models here.
 # 服务器硬件资源表
-class AppServerSource(models.Model):
-    mainboard = models.CharField(maxlength = 30);
-    cpu = models.CharField(maxlength = 30);
-    disc = models.CharField(maxlength = 30);
+class AppServer(models.Model):
+    host_name = models.CharField(maxlength = 30);
+    cpu_core = models.CharField(maxlength = 30);
+    cpu_type = models.CharField(maxlength = 30);
     memory = models.CharField(maxlength = 30);
-    ip = models.CharField(maxlength = 39);
+    sn = models.CharField(maxlength = 30);
     
 # 服务器实例资源表   
-class AppInstanceSource(models.Model):
-    mainboard = models.CharField(maxlength = 30);
-    cpu = models.CharField(maxlength = 30);
-    disc = models.CharField(maxlength = 30);
+class AppInstance(models.Model):
+    host_name = models.CharField(maxlength = 30);
+    cpu_core = models.CharField(maxlength = 30);
     memory = models.CharField(maxlength = 30);
-    ip = models.CharField(maxlength = 39);
-    source_owner = models.ForeignKey(AppServerSource); 
+    appserver_id = models.ForeignKey(AppServer); 
     
 #服务器字典表
 class Dictionary(models.Model):
