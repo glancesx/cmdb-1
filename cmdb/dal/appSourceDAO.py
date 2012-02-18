@@ -9,21 +9,20 @@ class appSourceDAO(object):
     classdocs AppSource's database operation
     '''
 
-
     def __init__(self,params):
         '''
         Constructor
         '''
         return;
     
-    def insertAppSource(self):
+    def insert(self):
         return;
         
-    def deleteAppSource(self):
+    def delete(self):
         return;
     
-    def queryAppSource(self):
+    def query(self):
         return;
     
-    def updateAppSource(self):
+    def update(self):
         return;

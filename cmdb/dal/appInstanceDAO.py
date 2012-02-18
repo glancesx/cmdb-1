@@ -14,5 +14,15 @@ class appInstanceDAO(object):
         '''
         Constructor
         '''
+
+    def insert(self):
         return;
         
+    def delete(self):
+        return;
+    
+    def query(self):
+        return;
+    
+    def update(self):
+        return;        
