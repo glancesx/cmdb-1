@@ -3,6 +3,7 @@ Created on 2012-2-13
 
 @author: yezi
 '''
+from models import AppInstance
 
 class appInstanceDAO(object):
     '''
@@ -13,7 +14,7 @@ class appInstanceDAO(object):
     def __init__(self,params):
         '''
         Constructor
-        '''
+        '''        
 
     def insert(self):
         return;

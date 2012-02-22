@@ -23,13 +23,13 @@ class Common(models.Model):
 # Create your models here.
 # 服务器字典表
 class Dictionary(Common):
-    key = models.CharField(max_length = 20);
+    key = models.CharField(max_length = 20,unique = True);
     value = models.CharField(max_length = 50);
     key_type = models.CharField(max_length = 20,choices = KEY_TYPE_CHOICES);
 
 # 服务器硬件资源表
 class AppServer(Common):
-    host_name = models.CharField(max_length = 30);
+    host_name = models.CharField(max_length = 30, unique = True);
     cpu_core = models.CharField(max_length = 10);
     cpu_type = models.ForeignKey(Dictionary);
     memory = models.CharField(max_length = 30);
@@ -37,7 +37,7 @@ class AppServer(Common):
     
 # 服务器实例资源表   
 class AppInstance(Common):
-    host_name = models.CharField(max_length = 30);
+    host_name = models.CharField(max_length = 30,unique = True);
     cpu_core = models.CharField(max_length = 30);
     memory = models.CharField(max_length = 30);
     appserver_id = models.ForeignKey(AppServer); 
@@ -53,7 +53,7 @@ class Ip_Source(Common):
 class Disc_Source(Common):
     number = models.IntegerField();
     size = models.BigIntegerField();
-    raid = models.CharField(max_length = 10);
+    raid = models.ForeignKey(Dictionary);
     raid_size = models.BigIntegerField();
     remark = models.CharField(max_length = 500);
     appserver_id = models.ForeignKey(AppServer);
@@ -62,7 +62,7 @@ class Disc_Source(Common):
 class Disc_Patition(Common):
     patition = models.CharField(max_length = 50);
     patition_size = models.BigIntegerField();
-    patition_type = models.CharField(max_length = 20);
+    patition_type = models.ForeignKey(Dictionary);
     appinstance_id = models.ForeignKey(AppInstance);
 
 # 服务器应用系统关联表    
