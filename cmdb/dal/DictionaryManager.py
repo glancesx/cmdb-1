@@ -9,62 +9,59 @@ class DictionaryManager(object):
     '''
     classdocs
     '''
-    def __init__(self):
-        '''
-        Constructor
-        '''
+    def __init__(self):        
         pass
     
-    def getDictionaryInfoAll(self):               
-        dictionary = CMDB_Dictionary()
-        return dictionary.objects.filter(flag = True)
+    def getDictionaryInfoAll(self):
+        return CMDB_Dictionary.objects.filter(flag = True)
     
-    def getDictionaryInfoAllFalse(self):
-        dictionary = CMDB_Dictionary()
-        return dictionary.objects.filter(flag = False)
+    def getDictionaryInfoAllFalse(self):        
+        return CMDB_Dictionary.objects.filter(flag = False)
            
     def getDictionaryInfoByType(self,keyType):
         if keyType is None:
             #add logging
-            return        
-        dictionary = CMDB_Dictionary()
-        return dictionary.objects.filter(key_type = keyType,flag = True)
+            return
+        return CMDB_Dictionary.objects.filter(key_type = keyType,flag = True)
     
     def getDictionaryInfoByValue(self,keyValue):
         if keyValue is None:
             #add logging
             return
-        dictionary = CMDB_Dictionary()
-        return dictionary.objects.filter(value__contains = keyValue,flag = True)
+        return CMDB_Dictionary.objects.filter(value__contains = keyValue,flag = True)
         
     def insertDictionaryInfo(self,dictionaryList):
         dictionary = CMDB_Dictionary()
         for dictionary in dictionaryList:
             if self.checkKeyType(dictionary.key_type):
                 #add logging
-                return    
+                return
+            if self.checkUnique(dictionary.key):
+                #add logging
+                return            
+            dictionary.flag = True 
             dictionary.save()
                 
     def updateDictionaryInfo(self,dictionaryInfo):
         if self.checkKeyType(dictionaryInfo.key_type):
             #add logging
             return
-        
-        dictionary = CMDB_Dictionary()
-        existDict = dictionary.objects.get(id = dictionaryInfo.id)
+                
+        existDict = CMDB_Dictionary.objects.get(id = dictionaryInfo.id)
         if existDict :
-            updateDict = existDict(dictionaryInfo)
-            updateDict.save()
+            existDict = dictionaryInfo
+            existDict.gmtModifier = 'system'
+            existDict.save()
         else:
             #add logging
             return
             
-    def switchDictionaryInfoFlag(self,keyId,flagStatus):
-        dictionary = CMDB_Dictionary()
-        existDict = dictionary.objects.get(id = keyId)
+    def switchDictionaryInfoFlag(self,keyId,flagStatus):        
+        existDict = CMDB_Dictionary.objects.get(id = keyId)
         if existDict:
-            updateDict = existDict(flag = flagStatus)
-            updateDict.save()
+            existDict.flag = flagStatus
+            existDict.gmtModifier = 'system'
+            existDict.save()
         else :
             #add logging
             return
@@ -72,8 +69,14 @@ class DictionaryManager(object):
     def checkKeyType(self,keyType):
         checkFlag = True
         for keyTuple in KEY_TYPE_CHOICES:
-            if keyType == keyTuple(0):
+            if keyType == keyTuple[0]:
                 checkFlag = False
+        return checkFlag
+    
+    def checkUnique(self,checkKey):
+        checkFlag = True
+        if CMDB_Dictionary.objects.get(key = checkKey):
+            checkFlag = False
         return checkFlag
     
             

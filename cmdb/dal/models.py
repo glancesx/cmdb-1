@@ -13,10 +13,10 @@ KEY_TYPE_CHOICES = (
 
 class Common(models.Model):
     gmtCreator = models.CharField(max_length = 32)
-    gmtCreated = models.DateTimeField(auto_now_add = True,input_formats ='%Y-%m-%d %H:%M:%S')
+    gmtCreated = models.DateTimeField(auto_now_add = True)
     gmtModifier = models.CharField(max_length = 32)
-    gmtModified = models.DateTimeField(auto_now = True,input_formats ='%Y-%m-%d %H:%M:%S')
-    flag = models.BooleanField(required = False)
+    gmtModified = models.DateTimeField(auto_now = True)
+    flag = models.BooleanField()
     
     class Meta:
         app_label = 'dal'
@@ -31,7 +31,7 @@ class CMDB_Dictionary(Common):
     
     class Meta:
         app_label = 'dal'
-        ordering = ['id','key_type']
+        ordering = ["id","key_type"]
 
 # 服务器硬件资源表
 class CMDB_AppServer(Common):
