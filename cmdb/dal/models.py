@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 from django.db import models
+import datetime
 
 KEY_TYPE_CHOICES = (
                     (u'CPU_TYPE',u'cpu_type class'),
@@ -12,12 +13,19 @@ KEY_TYPE_CHOICES = (
                     )
 
 class Common(models.Model):
-    gmtCreator = models.CharField(max_length = 32)
-    gmtCreated = models.DateTimeField(auto_now_add = True)
-    gmtModifier = models.CharField(max_length = 32)
-    gmtModified = models.DateTimeField(auto_now = True)
+    gmtCreator = models.CharField(max_length = 32)    
+    gmtCreated = models.DateTimeField()
+    gmtModifier = models.CharField(max_length = 32)    
+    gmtModified = models.DateTimeField()
     flag = models.BooleanField()
     
+    def save(self, *args, **kwargs):
+        ''' On save, update timestamps as '%Y-%m-%d %H:%M:%S' '''
+        if not self.id :
+            self.gmtCreated = datetime.datetime.strftime(datetime.datetime.today(),'%Y-%m-%d %H:%M:%S')
+        self.gmtModified = datetime.datetime.strftime(datetime.datetime.today(),'%Y-%m-%d %H:%M:%S')
+        super(Common,self).save(*args, **kwargs)
+        
     class Meta:
         app_label = 'dal'
         abstract = True
