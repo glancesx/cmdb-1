@@ -5,6 +5,7 @@ Created on 2012-2-25
 @author: zi.yez
 '''
 from cmdb.dal.models import CMDB_Dictionary,KEY_TYPE_CHOICES
+from django.db.models import Q
 
 class DictionaryManager(object):
     '''
@@ -16,10 +17,6 @@ class DictionaryManager(object):
     #get all active dictionary info
     def getDictionaryInfoAll(self):
         return CMDB_Dictionary.objects.filter(flag = True)
-    
-    #get all inactive dictionary info
-    def getDictionaryInfoAllFalse(self):        
-        return CMDB_Dictionary.objects.filter(flag = False)
     
     #get dictionary info by keyType       
     def getDictionaryInfoByType(self,keyType):
@@ -85,7 +82,7 @@ class DictionaryManager(object):
     #keep the key unique
     def checkUnique(self,checkKey):
         checkFlag = False
-        if CMDB_Dictionary.objects.filter(key = checkKey):
+        if CMDB_Dictionary.objects.filter(key = checkKey,flag = True):
             checkFlag = True
         return checkFlag
     

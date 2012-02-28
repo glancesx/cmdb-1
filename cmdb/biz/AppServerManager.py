@@ -12,5 +12,7 @@ class AppServerManager(object):
     def __init__(self):
         pass
     
+    def insertAppServerInfo(self):
+        
     
         
