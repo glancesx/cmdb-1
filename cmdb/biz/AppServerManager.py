@@ -3,7 +3,7 @@ Created on 2012-2-27
 
 @author: zi.yez
 '''
-from cmdb.dal.models import CMDB_AppServer,CMDB_Dictionary
+from cmdb.dal.models import CMDB_AppServer
 from django.db.models import Q
 
 
@@ -15,33 +15,33 @@ class AppServerManager(object):
     def __init__(self):
         pass
     
-    def getAppServerInfoByCondition(self,hostName,cpuCore,cpuType,serverMemory,serverSn,startTime,endTime):
+    def getAppServerInfoByCondition(self,conditionDict):
         condition = Q(flag = True)
              
-        if hostName is not None:
-            condition.add(Q(host_name__icontains = hostName), Q.AND)
-        if cpuCore is not None:
-            condition.add(Q(cpu_core__icontains = cpuCore), Q.AND)
-        if cpuType is not None:
-            condition.add(Q(cpu_type = cpuType), Q.AND)
-        if serverMemory is not None:
-            condition.add(Q(memory = serverMemory), Q.AND)
-        if serverSn is not None:
-            condition.add(Q(sn__icontains = serverSn), Q.AND)
-        if startTime is not None:
-            condition.add(Q(gmtcreated__gte = startTime), Q.AND)
-        if endTime is not None:
-            condition.add(Q(gmtcreated__lte = endTime), Q.AND)
+        if conditionDict.has_key('host_name') and conditionDict['host_name'] is not None:
+            condition.add(Q(host_name__icontains = conditionDict['host_name']), Q.AND)
+        if conditionDict.has_key('cpu_core') and conditionDict['cpu_core'] is not None:
+            condition.add(Q(cpu_core__icontains = conditionDict['cpu_core']), Q.AND)
+        if conditionDict.has_key('cpu_type') and conditionDict['cpu_type'] is not None:
+            condition.add(Q(cpu_type = conditionDict['cpu_type']), Q.AND)
+        if conditionDict.has_key('memory') and conditionDict['memory'] is not None:
+            condition.add(Q(memory = conditionDict['memory']), Q.AND)
+        if conditionDict.has_key('sn') and conditionDict['sn'] is not None:
+            condition.add(Q(sn__icontains = conditionDict['sn']), Q.AND)
+        if conditionDict.has_key('startTime') and conditionDict['startTime'] is not None:
+            condition.add(Q(gmtcreated__gte = conditionDict['startTime']), Q.AND)
+        if conditionDict.has_key('endTime') and conditionDict['endTime'] is not None:
+            condition.add(Q(gmtcreated__lte = conditionDict['endTime']), Q.AND)
             
         return CMDB_AppServer.objects.filter(condition)
     
     def insertAppServerInfo(self,appServerList):
         appServerInfo = CMDB_AppServer()
         for appServerInfo in appServerList:
-            if self.__checkHostNameUnique(appServerInfo.host_name):
+            if appServerInfo.checkHostNameUnique(appServerInfo.host_name):
                 #add logging
                 pass
-            elif not self.__checkCpuType(appServerInfo.cpu_type):
+            elif not appServerInfo.checkCpuType(appServerInfo.cpu_type):
                 #add logging
                 pass
             else:
@@ -50,7 +50,7 @@ class AppServerManager(object):
                 appServerInfo.save()
     
     def updateAppServerInfo(self,appServerInfo):
-        if not self.__checkCpuType(appServerInfo.cpu_type):
+        if not appServerInfo.checkCpuType(appServerInfo.cpu_type):
             #add logging
             return
         try:
@@ -70,10 +70,3 @@ class AppServerManager(object):
         except:
             #add logging
             return
-                    
-    
-    def __checkCpuType(self,cpuType):
-        return CMDB_Dictionary.objects.filter(key = cpuType, key_type = 'CPU_TYPE')
-        
-    def __checkHostNameUnique(self,hostName):                
-        return CMDB_AppServer.objects.filter(host_name__iexact = hostName,flag = True)            

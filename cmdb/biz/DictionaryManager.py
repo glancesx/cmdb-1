@@ -4,7 +4,7 @@ Created on 2012-2-25
 
 @author: zi.yez
 '''
-from cmdb.dal.models import CMDB_Dictionary,KEY_TYPE_CHOICES
+from cmdb.dal.models import CMDB_Dictionary
 from django.db.models import Q
 
 class DictionaryManager(object):
@@ -26,10 +26,10 @@ class DictionaryManager(object):
     def insertDictionaryInfo(self,dictionaryList):
         dictionary = CMDB_Dictionary()
         for dictionary in dictionaryList:
-            if self.__checkKeyType(dictionary.key_type):
+            if not dictionary.checkKeyType(dictionary.key_type):
                 #add logging
                 pass
-            elif self.__checkUnique(dictionary.key):
+            elif dictionary.checkKeyUnique(dictionary.key):
                 #add logging
                 pass
             else:
@@ -38,7 +38,7 @@ class DictionaryManager(object):
     
     #update the dictionary info            
     def updateDictionaryInfo(self,dictionaryInfo):
-        if self.__checkKeyType(dictionaryInfo.key_type):
+        if not dictionaryInfo.checkKeyType(dictionaryInfo.key_type):
             #add logging
             return
         
@@ -49,8 +49,7 @@ class DictionaryManager(object):
             existDict.save()            
         except:
             #add logging
-            return
-            
+            return            
     
     #delete the dictionary info        
     def deleteDictionaryInfo(self,keyId):        
@@ -61,16 +60,4 @@ class DictionaryManager(object):
             existDict.save()
         except :
             #add logging
-            return
-    
-    #check the key_type is in the tuple KEY_TYPE_CHOICES or not
-    def __checkKeyType(self,keyType):
-        checkFlag = True
-        for keyTuple in KEY_TYPE_CHOICES:
-            if keyType == keyTuple[0]:
-                checkFlag = False
-        return checkFlag
-    
-    #keep the key unique
-    def __checkUnique(self,checkKey):
-        return CMDB_Dictionary.objects.filter(key__iexact = checkKey,flag = True)           
+            return         

@@ -37,9 +37,21 @@ class CMDB_Dictionary(Common):
     value = models.CharField(max_length = 50)
     key_type = models.CharField(max_length = 20,choices = KEY_TYPE_CHOICES)
     
+    #check the key_type is in the tuple KEY_TYPE_CHOICES or not
+    def checkKeyType(self,keyType):
+        booleanFlag = False
+        for keyTuple in KEY_TYPE_CHOICES:
+            if keyTuple[0] == keyType:
+                booleanFlag = True
+        return booleanFlag
+    
+    #check the key is unique or not
+    def checkKeyUnique(self,checkKey):
+        return self.objects.filter(key__iexact = checkKey,flag = True)
+    
     class Meta:
         app_label = 'dal'
-        ordering = ["id","key_type"]
+        ordering = ['id','key_type']
 
 # 服务器硬件资源表
 class CMDB_AppServer(Common):
@@ -49,6 +61,16 @@ class CMDB_AppServer(Common):
     memory = models.CharField(max_length = 30)
     sn = models.CharField(max_length = 30)
     
+    def checkCpuType(self,cpuType):
+        return self.objects.filter(key = cpuType, key_type = 'CPU_TYPE')
+        
+    def checkHostNameUnique(self,hostName):                
+        return self.objects.filter(host_name__iexact = hostName,flag = True)
+    
+    class Meta:
+        app_label = 'dal'
+        ordering = ['id']
+        
 # 服务器实例资源表   
 class CMDB_AppInstance(Common):
     host_name = models.CharField(max_length = 30)
@@ -56,6 +78,8 @@ class CMDB_AppInstance(Common):
     memory = models.CharField(max_length = 30)
     appserver_id = models.ForeignKey(CMDB_AppServer) 
     
+    def checkHostNameUnique(self,hostName):
+        return self.objects.filter(host_name__iexact = hostName,flag = True)
 # IP资源表
 class CMDB_Ip_Source(Common):
     ip = models.CharField(max_length = 39)
