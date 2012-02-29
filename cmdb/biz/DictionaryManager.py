@@ -41,24 +41,25 @@ class DictionaryManager(object):
         if self.__checkKeyType(dictionaryInfo.key_type):
             #add logging
             return
-                
-        existDict = CMDB_Dictionary.objects.get(id = dictionaryInfo.id,flag = True)
-        if existDict :
+        
+        try:
+            existDict = CMDB_Dictionary.objects.get(id = dictionaryInfo.id,flag = True)
             existDict = dictionaryInfo
             existDict.gmtModifier = 'system'
             existDict.save()            
-        else:
+        except:
             #add logging
             return
+            
     
     #delete the dictionary info        
     def deleteDictionaryInfo(self,keyId):        
-        existDict = CMDB_Dictionary.objects.get(id = keyId,flag = True)
-        if existDict:
+        try:
+            existDict = CMDB_Dictionary.objects.get(id = keyId,flag = True)
             existDict.flag = False
             existDict.gmtModifier = 'system'
             existDict.save()
-        else :
+        except :
             #add logging
             return
     

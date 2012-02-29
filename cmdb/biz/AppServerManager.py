@@ -53,13 +53,24 @@ class AppServerManager(object):
         if not self.__checkCpuType(appServerInfo.cpu_type):
             #add logging
             return
-        ExistAppServer = CMDB_AppServer.objects.filter(appServerInfo.id,flag = True)
-        if ExistAppServer:
-            ExistAppServer = appServerInfo
-            ExistAppServer.gmtModifier = 'system'
-            ExistAppServer.save()
-        else:
-            return            
+        try:
+            existAppServer = CMDB_AppServer.objects.get(id = appServerInfo.id,flag = True)
+            existAppServer = appServerInfo
+            existAppServer.gmtModifier = 'system'
+            existAppServer.save()
+        except:
+            #add logging
+            return
+        
+    def deleteAppServerInfo(self,appServerId):
+        try:
+            existAppServer = CMDB_AppServer.objects.get(id = appServerId,flag = True)
+            existAppServer.flag = False
+            existAppServer.save()
+        except:
+            #add logging
+            return
+                    
     
     def __checkCpuType(self,cpuType):
         return CMDB_Dictionary.objects.filter(key = cpuType, key_type = 'CPU_TYPE')
