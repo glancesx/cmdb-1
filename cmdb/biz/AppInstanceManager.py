@@ -24,8 +24,8 @@ class AppInstanceManager(object):
             condition.add(Q(cpu_core = conditionDict['cpu_core']),Q.AND)
         if conditionDict.has_key('memory') and conditionDict['memory'] is not None:
             condition.add(Q(memory = conditionDict['memory']), Q.AND)
-        if conditionDict.has_key('appServer_id') and conditionDict['appServer_id'] is not None:
-            condition.add(Q(appServer_id = conditionDict['appServer_id']), Q.AND)
+        if conditionDict.has_key('appserver_id') and conditionDict['appserver_id'] is not None:
+            condition.add(Q(appserver_id = conditionDict['appserver_id']), Q.AND)
         
         return CMDB_AppInstance.objects.filter(condition)
     
@@ -35,7 +35,28 @@ class AppInstanceManager(object):
             if appInstance.checkHostNameUnique(appInstance.host_name):
                 #add logging
                 pass
+            #elif the foreignkey judgement ???
             else:
                 appInstance.flag = True
                 appInstance.save()
-        
+    
+    def deleteAppInstanceInfo(self,appInstanceId):
+        try:
+            appInstanceInfo = CMDB_AppInstance.objects.get(id = appInstanceId)
+            appInstanceInfo.flag = False
+            appInstanceInfo.gmtModified = 'system'
+            appInstanceInfo.save() 
+        except:
+            #add logging
+            pass
+    
+    def deleteAppInstanceInfoByAppServerId(self,appServerId):
+        appInstanceTuple = CMDB_AppInstance.objects.filter(appserver_id = appServerId,flag = True)
+        if appInstanceTuple:
+            for appInstance in appInstanceTuple:
+                appInstance.flag = False
+                appInstance.gmtModified = 'system'
+                appInstance.save()
+        else:
+            #add logging
+            pass      

@@ -80,6 +80,10 @@ class CMDB_AppInstance(Common):
     
     def checkHostNameUnique(self,hostName):
         return self.objects.filter(host_name__iexact = hostName,flag = True)
+    
+    class Meta:
+        app_label = 'dal'
+        ordering = ['id']
 # IP资源表
 class CMDB_Ip_Source(Common):
     ip = models.CharField(max_length = 39)

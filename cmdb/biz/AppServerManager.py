@@ -4,6 +4,7 @@ Created on 2012-2-27
 @author: zi.yez
 '''
 from cmdb.dal.models import CMDB_AppServer
+from AppInstanceManager import AppInstanceManager
 from django.db.models import Q
 
 
@@ -60,13 +61,17 @@ class AppServerManager(object):
             existAppServer.save()
         except:
             #add logging
-            return
+            pass
         
     def deleteAppServerInfo(self,appServerId):
         try:
             existAppServer = CMDB_AppServer.objects.get(id = appServerId,flag = True)
+            # false the appinstance
+            AppInstanceManager().deleteAppInstanceInfoByAppServerId(appServerId)
+            
             existAppServer.flag = False
+            existAppServer.gmtModifier = 'system'
             existAppServer.save()
         except:
             #add logging
-            return
+            pass
