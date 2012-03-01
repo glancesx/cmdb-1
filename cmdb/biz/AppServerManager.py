@@ -68,7 +68,8 @@ class AppServerManager(object):
             existAppServer = CMDB_AppServer.objects.get(id = appServerId,flag = True)
             # false the appinstance
             AppInstanceManager().deleteAppInstanceInfoByAppServerId(appServerId)
-            
+            # false other source
+                        
             existAppServer.flag = False
             existAppServer.gmtModifier = 'system'
             existAppServer.save()

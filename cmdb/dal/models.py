@@ -88,8 +88,6 @@ class CMDB_AppInstance(Common):
 class CMDB_Ip_Source(Common):
     ip = models.CharField(max_length = 39)
     ip_type = models.ForeignKey(CMDB_Dictionary)
-    server = models.IntegerField()
-    server_type = models.CharField(max_length = 20)
     
 # 硬盘硬件资源表
 class CMDB_Disc_Source(Common):
@@ -97,22 +95,19 @@ class CMDB_Disc_Source(Common):
     size = models.BigIntegerField()
     raid = models.ForeignKey(CMDB_Dictionary)
     raid_size = models.BigIntegerField()
-    remark = models.CharField(max_length = 500)
-    appserver_id = models.ForeignKey(CMDB_AppServer)
+    remark = models.CharField(max_length = 500)    
 
 # 服务器实例分区资源表
 class CMDB_Disc_Patition(Common):
     patition = models.CharField(max_length = 50)
     patition_size = models.BigIntegerField()
-    patition_type = models.ForeignKey(CMDB_Dictionary)
-    appinstance_id = models.ForeignKey(CMDB_AppInstance)
+    patition_type = models.ForeignKey(CMDB_Dictionary)    
 
 # 服务器应用系统关联表    
 class CMDB_AppBiz(Common):
     env = models.ForeignKey(CMDB_Dictionary,related_name = 'env_set')
     app = models.ForeignKey(CMDB_Dictionary,related_name = 'app_set')
     app_source = models.URLField()
-    appinstance_id = models.ForeignKey(CMDB_AppInstance)
     
 # DNS解析表
 class CMDB_Dns(Common):
@@ -120,3 +115,12 @@ class CMDB_Dns(Common):
     dns = models.URLField()
     env = models.ForeignKey(CMDB_Dictionary,related_name = 'env_dns_set')
     app = models.ForeignKey(CMDB_Dictionary,related_name = 'app_dns_set')
+
+# 资源挂载关系表    
+class CMDB_Relationship(Common):
+    force = models.IntegerField()
+    force_table = models.CharField(max_length = 32)
+    source = models.IntegerField()
+    source_table = models.CharField(max_length = 32)
+
+#select 'drop '||object_type||' '||object_name||';' drop_sql from user_objects where object_type in ('TABLE','TRIGGER','SEQUENCE');     
