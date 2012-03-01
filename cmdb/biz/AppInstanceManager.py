@@ -29,7 +29,13 @@ class AppInstanceManager(object):
         
         return CMDB_AppInstance.objects.filter(condition)
     
-    def insertAppInstanceInfo(self):
-        
-        return
+    def insertAppInstanceInfo(self,appInstanceList):
+        appInstance = CMDB_AppInstance()
+        for appInstance in appInstanceList:
+            if appInstance.checkHostNameUnique(appInstance.host_name):
+                #add logging
+                pass
+            else:
+                appInstance.flag = True
+                appInstance.save()
         

@@ -14,12 +14,12 @@ class DictionaryManager(object):
     def __init__(self):        
         pass
     
-    def getDictionaryInfoByCondition(self,keyType,keyValue):
+    def getDictionaryInfoByCondition(self,conditionDict):
         condition = Q(flag = True)
-        if keyType is not None:            
-            condition.add(Q(key_type = keyType), Q.AND)
-        if keyValue is not None:            
-            condition.add(Q(value__icontains = keyValue), Q.AND)
+        if conditionDict.has_key('key_type') and conditionDict['key_type'] is not None:            
+            condition.add(Q(key_type = conditionDict['key_type']), Q.AND)
+        if conditionDict.has_key('value') and conditionDict['value'] is not None:            
+            condition.add(Q(value__icontains = conditionDict['value']), Q.AND)
         return CMDB_Dictionary.objects.filter(condition)    
     
     #insert dictionary info and active it    
