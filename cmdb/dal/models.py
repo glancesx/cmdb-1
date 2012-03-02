@@ -62,7 +62,7 @@ class CMDB_AppServer(Common):
     sn = models.CharField(max_length = 30)
     
     def checkCpuType(self,cpuType):
-        return self.objects.filter(key = cpuType, key_type = 'CPU_TYPE')
+        return CMDB_Dictionary.objects.filter(key = cpuType, key_type = 'CPU_TYPE')
         
     def checkHostNameUnique(self,hostName):                
         return self.objects.filter(host_name__iexact = hostName,flag = True)
@@ -88,6 +88,12 @@ class CMDB_AppInstance(Common):
 class CMDB_Ip_Source(Common):
     ip = models.CharField(max_length = 39)
     ip_type = models.ForeignKey(CMDB_Dictionary)
+    
+    def checkIpUnique(self,checkIp):
+        return self.objects.filter(ip = checkIp,flag = True)
+    
+    def checkIpType(self,ipType):
+        return CMDB_Dictionary.objects.filter(key = ipType,key_type = 'IP_TYPE')
     
 # 硬盘硬件资源表
 class CMDB_Disc_Source(Common):

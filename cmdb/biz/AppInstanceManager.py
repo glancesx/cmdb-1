@@ -39,6 +39,15 @@ class AppInstanceManager(object):
             else:
                 appInstance.flag = True
                 appInstance.save()
+                
+    def updateAppInstanceInfo(self,appInstanceInfo):
+        try:
+            existAppInstance = CMDB_AppInstance.objects.get(id = appInstanceInfo.id)
+            existAppInstance = appInstanceInfo
+            existAppInstance.gmtmodified = 'system'
+        except:
+            #add logging
+            pass
     
     def deleteAppInstanceInfo(self,appInstanceId):
         try:
