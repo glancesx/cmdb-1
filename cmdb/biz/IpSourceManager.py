@@ -42,5 +42,13 @@ class IpSourceManager(object):
         except:
             #add logging
             pass
-        
     
+    def deleteIpSourceInfo(self,ipId):
+        try:
+            ipSource = CMDB_Ip_Source.objects.get(id = ipId,flag = True)
+            ipSource.flag = False
+            ipSource.gmtmodified = 'system'
+            ipSource.save()
+        except:
+            #add logging
+            pass

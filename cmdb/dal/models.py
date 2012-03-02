@@ -101,7 +101,10 @@ class CMDB_Disc_Source(Common):
     size = models.BigIntegerField()
     raid = models.ForeignKey(CMDB_Dictionary)
     raid_size = models.BigIntegerField()
-    remark = models.CharField(max_length = 500)    
+    remark = models.CharField(max_length = 500)
+    
+    def checkRaidType(self,raidType):
+        return CMDB_Dictionary.objects.filter(key = raidType,key_type = 'RAID')    
 
 # 服务器实例分区资源表
 class CMDB_Disc_Patition(Common):
