@@ -41,10 +41,7 @@ class AppServerManager(object):
         for appServerInfo in appServerList:
             if appServerInfo.checkHostNameUnique(appServerInfo.host_name):
                 #add logging
-                pass
-            elif not appServerInfo.checkCpuType(appServerInfo.cpu_type):
-                #add logging
-                pass
+                pass            
             else:
                 #add logging
                 appServerInfo.flag = True

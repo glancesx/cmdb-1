@@ -29,7 +29,7 @@ class Common(models.Model):
     class Meta:
         app_label = 'dal'
         abstract = True
-        
+      
 # Create your models here.
 # 服务器字典表
 class CMDB_Dictionary(Common):
@@ -47,7 +47,7 @@ class CMDB_Dictionary(Common):
     
     #check the key is unique or not
     def checkKeyUnique(self,checkKey):
-        return self.objects.filter(key__iexact = checkKey,flag = True)
+        return CMDB_Dictionary.objects.filter(key__iexact = checkKey,flag = True)
     
     class Meta:
         app_label = 'dal'
@@ -60,12 +60,9 @@ class CMDB_AppServer(Common):
     cpu_type = models.ForeignKey(CMDB_Dictionary)
     memory = models.CharField(max_length = 30)
     sn = models.CharField(max_length = 30)
-    
-    def checkCpuType(self,cpuType):
-        return CMDB_Dictionary.objects.filter(key = cpuType, key_type = 'CPU_TYPE')
         
     def checkHostNameUnique(self,hostName):                
-        return self.objects.filter(host_name__iexact = hostName,flag = True)
+        return CMDB_AppServer.objects.filter(host_name__iexact = hostName,flag = True)
     
     class Meta:
         app_label = 'dal'
@@ -79,21 +76,41 @@ class CMDB_AppInstance(Common):
     appserver_id = models.ForeignKey(CMDB_AppServer) 
     
     def checkHostNameUnique(self,hostName):
-        return self.objects.filter(host_name__iexact = hostName,flag = True)
+        return CMDB_AppInstance.objects.filter(host_name__iexact = hostName,flag = True)
     
     class Meta:
         app_label = 'dal'
         ordering = ['id']
+
 # IP资源表
 class CMDB_Ip_Source(Common):
     ip = models.CharField(max_length = 39)
     ip_type = models.ForeignKey(CMDB_Dictionary)
     
-    def checkIpUnique(self,checkIp):
-        return self.objects.filter(ip = checkIp,flag = True)
+    def insertSource(self):
+        self.flag = True
+        self.save()
+            
+    def deleteSource(self):
+        try:
+            ipSource = CMDB_Ip_Source.objects.get(self.id,flag = True)
+            ipSource.flag = False
+            ipSource.save()
+        except:
+            #add logging
+            pass
     
-    def checkIpType(self,ipType):
-        return CMDB_Dictionary.objects.filter(key = ipType,key_type = 'IP_TYPE')
+    def updateSource(self):
+        try:
+            ipSource = CMDB_Ip_Source.objects.get(self.id,flag = True)
+            ipSource = self
+            ipSource.save()
+        except:
+            #add logging
+            pass                
+    
+    def checkIpUnique(self,checkIp):
+        return CMDB_Ip_Source.objects.filter(ip = checkIp,flag = True)
     
 # 硬盘硬件资源表
 class CMDB_Disc_Source(Common):
@@ -103,20 +120,86 @@ class CMDB_Disc_Source(Common):
     raid_size = models.BigIntegerField()
     remark = models.CharField(max_length = 500)
     
-    def checkRaidType(self,raidType):
-        return CMDB_Dictionary.objects.filter(key = raidType,key_type = 'RAID')    
+    def insertSource(self):
+        self.flag = True
+        self.save()
+    
+    def deleteSource(self):
+        try:
+            discSource = CMDB_Disc_Source.objects.get(self.id,flag = True)
+            discSource.flag = False
+            discSource.save()
+        except:
+            #add logging
+            pass
+    
+    def updateSource(self):
+        try:
+            discSource = CMDB_Disc_Source.objects.get(self.id,flag = True)
+            discSource = self
+            discSource.save()
+        except:
+            #add logging
+            pass          
 
 # 服务器实例分区资源表
 class CMDB_Disc_Patition(Common):
     patition = models.CharField(max_length = 50)
     patition_size = models.BigIntegerField()
     patition_type = models.ForeignKey(CMDB_Dictionary)    
-
+    
+    def insertSource(self):
+        self.flag = True
+        self.save()
+    
+    def deleteSource(self):
+        try:
+            discSource = CMDB_Disc_Patition.objects.get(self.id,flag = True)
+            discSource.flag = False
+            discSource.save()
+        except:
+            #add logging
+            pass
+    
+    def updateSource(self):
+        try:
+            discSource = CMDB_Disc_Patition.objects.get(self.id,flag = True)
+            discSource = self
+            discSource.save()
+        except:
+            #add logging
+            pass     
+    
 # 服务器应用系统关联表    
 class CMDB_AppBiz(Common):
     env = models.ForeignKey(CMDB_Dictionary,related_name = 'env_set')
     app = models.ForeignKey(CMDB_Dictionary,related_name = 'app_set')
     app_source = models.URLField()
+    
+    def checkAppBizUnique(self,checkEnv,checkApp):
+        return CMDB_AppBiz.objects.filter(env = checkEnv,app = checkApp,flag = True)
+    
+    def insertSource(self):
+        self.flag = True
+        self.save()
+    
+    def deleteSource(self):
+        try:
+            discSource = CMDB_Disc_Patition.objects.get(self.id,flag = True)
+            discSource.flag = False
+            discSource.save()
+        except:
+            #add logging
+            pass
+    
+    def updateSource(self):
+        try:
+            discSource = CMDB_Disc_Patition.objects.get(self.id,flag = True)
+            discSource = self
+            discSource.save()
+        except:
+            #add logging
+            pass
     
 # DNS解析表
 class CMDB_Dns(Common):
@@ -131,5 +214,8 @@ class CMDB_Relationship(Common):
     force_table = models.CharField(max_length = 32)
     source = models.IntegerField()
     source_table = models.CharField(max_length = 32)
+    
+    def checkRsUnique(self,checkForce,checkForceTable,checkSource,checkSourceTable):
+        return CMDB_Relationship.objects.filter(force = checkForce,force_table = checkForceTable, source = checkSource,source_table = checkSourceTable,flag = True)
 
 #select 'drop '||object_type||' '||object_name||';' drop_sql from user_objects where object_type in ('TABLE','TRIGGER','SEQUENCE');     
