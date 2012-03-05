@@ -29,7 +29,7 @@ class Common(models.Model):
     class Meta:
         app_label = 'dal'
         abstract = True
-        
+      
 # Create your models here.
 # 服务器字典表
 class CMDB_Dictionary(Common):
@@ -47,7 +47,7 @@ class CMDB_Dictionary(Common):
     
     #check the key is unique or not
     def checkKeyUnique(self,checkKey):
-        return self.objects.filter(key__iexact = checkKey,flag = True)
+        return CMDB_Dictionary.objects.filter(key__iexact = checkKey,flag = True)
     
     class Meta:
         app_label = 'dal'
@@ -65,7 +65,7 @@ class CMDB_AppServer(Common):
         return CMDB_Dictionary.objects.filter(key = cpuType, key_type = 'CPU_TYPE')
         
     def checkHostNameUnique(self,hostName):                
-        return self.objects.filter(host_name__iexact = hostName,flag = True)
+        return CMDB_AppServer.objects.filter(host_name__iexact = hostName,flag = True)
     
     class Meta:
         app_label = 'dal'
@@ -79,7 +79,7 @@ class CMDB_AppInstance(Common):
     appserver_id = models.ForeignKey(CMDB_AppServer) 
     
     def checkHostNameUnique(self,hostName):
-        return self.objects.filter(host_name__iexact = hostName,flag = True)
+        return CMDB_AppInstance.objects.filter(host_name__iexact = hostName,flag = True)
     
     class Meta:
         app_label = 'dal'
@@ -89,8 +89,16 @@ class CMDB_Ip_Source(Common):
     ip = models.CharField(max_length = 39)
     ip_type = models.ForeignKey(CMDB_Dictionary)
     
+    def insertSource(self):
+        if self.checkIpUnique(self.ip):
+            #add logging
+            pass
+        else:
+            self.flag = True
+            self.save()
+    
     def checkIpUnique(self,checkIp):
-        return self.objects.filter(ip = checkIp,flag = True)
+        return CMDB_Ip_Source.objects.filter(ip = checkIp,flag = True)
     
     def checkIpType(self,ipType):
         return CMDB_Dictionary.objects.filter(key = ipType,key_type = 'IP_TYPE')
@@ -115,6 +123,9 @@ class CMDB_AppBiz(Common):
     app = models.ForeignKey(CMDB_Dictionary,related_name = 'app_set')
     app_source = models.URLField()
     
+    def checkAppBizUnique(self,checkEnv,checkApp):
+        return CMDB_AppBiz.objects.filter(env = checkEnv,app = checkApp,flag = True)
+    
 # DNS解析表
 class CMDB_Dns(Common):
     ip = models.CharField(max_length = 39)
@@ -128,5 +139,8 @@ class CMDB_Relationship(Common):
     force_table = models.CharField(max_length = 32)
     source = models.IntegerField()
     source_table = models.CharField(max_length = 32)
+    
+    def checkRsUnique(self,checkForce,checkForceTable,checkSource,checkSourceTable):
+        return CMDB_Relationship.objects.filter(force = checkForce,force_table = checkForceTable, source = checkSource,source_table = checkSourceTable,flag = True)
 
 #select 'drop '||object_type||' '||object_name||';' drop_sql from user_objects where object_type in ('TABLE','TRIGGER','SEQUENCE');     

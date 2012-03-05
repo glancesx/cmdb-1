@@ -16,14 +16,14 @@ class IpSourceManager(object):
         '''
         pass
    
-    def getIpSourceInfo(self,ipId):
+    def getSource(self,ipId):
         try:                
             return CMDB_Ip_Source.objects.get(id = ipId)
         except:
             #add logging
             return
    
-    def insertIpSourceInfo(self,ipSourceList):
+    def insertSource(self,ipSourceList):
         ipSource = CMDB_Ip_Source()
         for ipSource in ipSourceList:
             if ipSource.checkIpUnique(ipSource.ip):
@@ -33,12 +33,22 @@ class IpSourceManager(object):
                 ipSource.flag = True
                 ipSource.save()
                 
-    def updateIpSourceInfo(self,ipSourceInfo):
+    def updateSource(self,ipSourceInfo):
         try:
             existIpInfo = CMDB_Ip_Source.objects.get(id = ipSourceInfo.id,flag = True)
             existIpInfo = ipSourceInfo
             existIpInfo.gmtmodified = 'system'
             existIpInfo.save()
+        except:
+            #add logging
+            pass
+        
+    def deleteSource(self,sourceId):
+        try:
+            ipSource = CMDB_Ip_Source.objects.get(id = sourceId, flag = True)
+            ipSource.flag = False
+            ipSource.gmtmodified = 'system'
+            ipSource.save()
         except:
             #add logging
             pass
