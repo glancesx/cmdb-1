@@ -4,6 +4,7 @@ Created on 2012-3-3
 @author: yezi
 '''
 from cmdb.dal.models import CMDB_Relationship
+from django.db.models import Q
 
 class RelationshipManager(object):
     '''
@@ -58,4 +59,16 @@ class RelationshipManager(object):
             #add logging
             pass
         
+    def getRelationship(self,conditionDict):
+        condition = Q(flag = True)
+        if conditionDict.has_key('force') and conditionDict['force'] is not None:
+            condition.add(Q(force = conditionDict['force']), Q.AND)
+        if conditionDict.has_key('force_table') and conditionDict['force_table'] is not None:
+            condition.add(Q(force_table = conditionDict['force_table']), Q.AND)
+        if conditionDict.has_key('source') and conditionDict['source'] is not None:
+            condition.add(Q(source = conditionDict['source']), Q.AND) 
+        if conditionDict.has_key('source_table') and conditionDict['source_table'] is not None:
+            condition.add(Q(source_table = conditionDict['source_table']), Q.AND)    
+        
+        return CMDB_Relationship.objects.filter(condition)
             
