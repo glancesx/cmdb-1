@@ -84,12 +84,16 @@ class CMDB_AppInstance(Common):
 
 # IP资源表
 class CMDB_Ip_Source(Common):
-    ip = models.CharField(max_length = 39)
+    ip = models.IPAddressField()
     ip_type = models.ForeignKey(CMDB_Dictionary)
     
     def insertSource(self):
-        self.flag = True
-        self.save()
+        if self.checkIpUnique(self.ip):
+            #add logging
+            pass
+        else:
+            self.flag = True
+            self.save()
             
     def deleteSource(self):
         try:
@@ -174,14 +178,20 @@ class CMDB_Disc_Patition(Common):
 class CMDB_AppBiz(Common):
     env = models.ForeignKey(CMDB_Dictionary,related_name = 'env_set')
     app = models.ForeignKey(CMDB_Dictionary,related_name = 'app_set')
-    app_source = models.URLField()
+    app_type = models.ForeignKey(CMDB_Dictionary,related_name = 'app_type_set')
+    app_port = models.IntegerField()
+    app_source = models.CharField(max_length = 256)
     
-    def checkAppBizUnique(self,checkEnv,checkApp):
-        return CMDB_AppBiz.objects.filter(env = checkEnv,app = checkApp,flag = True)
+    def checkAppBizUnique(self,checkEnv,checkApp,appPort):
+        return CMDB_AppBiz.objects.filter(env = checkEnv,app = checkApp,app_port = appPort,flag = True)
     
     def insertSource(self):
-        self.flag = True
-        self.save()
+        if self.checkAppBizUnique(self.env,self.app,self.app_port):
+            #add logging
+            pass
+        else:
+            self.flag = True
+            self.save()
     
     def deleteSource(self):
         try:
@@ -203,7 +213,7 @@ class CMDB_AppBiz(Common):
     
 # DNS解析表
 class CMDB_Dns(Common):
-    ip = models.CharField(max_length = 39)
+    ip = models.IPAddressField()
     dns = models.URLField()
     env = models.ForeignKey(CMDB_Dictionary,related_name = 'env_dns_set')
     app = models.ForeignKey(CMDB_Dictionary,related_name = 'app_dns_set')
