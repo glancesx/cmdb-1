@@ -19,9 +19,9 @@ class RelationshipManager(object):
     def mountSource(self,forceObject,sourceObject):
         relationship = CMDB_Relationship()
         relationship.force = forceObject.id
-        relationship.force_table = forceObject.__class__.__name__
+        relationship.force_table = forceObject.tableName()
         relationship.source = sourceObject.id
-        relationship.source_table = sourceObject.__class__.__name__
+        relationship.source_table = sourceObject.tableName()
         
         if relationship.checkRsUnique(relationship.force, relationship.force_table, relationship.source, relationship.source_table):
             #add logging
@@ -32,16 +32,17 @@ class RelationshipManager(object):
     
     def mountAndInsertSource(self,forceObject,sourceObjectList):
         for sourceObject in sourceObjectList:
-            self.mountSource(forceObject,sourceObject)
             getattr(sourceObject,'insertObject')(sourceObject)
+            self.mountSource(forceObject,sourceObject)
+            
         
             
     def __disRelationship(self,forceObject,sourceObject):
         relationship = CMDB_Relationship()
         relationship.force = forceObject.id
-        relationship.force_table = forceObject.__class__.__name__
+        relationship.force_table = forceObject.tableName()
         relationship.source = sourceObject.id
-        relationship.source_table = sourceObject.__class__.__name__
+        relationship.source_table = sourceObject.tableName()
         
         try:
             existRelationship = CMDB_Relationship.objects.get(force = relationship.force,force_table = relationship.force_table,source = relationship.source,source_table = relationship.source_table)
@@ -70,5 +71,5 @@ class RelationshipManager(object):
         if conditionDict.has_key('source_table') and conditionDict['source_table'] is not None:
             condition.add(Q(source_table = conditionDict['source_table']), Q.AND)    
         
-        return CMDB_Relationship.objects.filter(condition)
+        return CMDB_Relationship.objects.filter(condition)   
             

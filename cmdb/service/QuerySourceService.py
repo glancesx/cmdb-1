@@ -9,7 +9,7 @@ from cmdb.biz.RelationshipManager import *
 from cmdb.dal.AppInstanceManager import *
 from cmdb.dal.AppBizManager import *
 
-class SourceQueryService(object):
+class QuerySourceService(object):
     '''
     classdocs
     '''
@@ -23,7 +23,7 @@ class SourceQueryService(object):
     
     def queryAppInstanceByIp(self,ip):
         appInstance = CMDB_AppInstance()
-        relationship = self.__getRelationshipByIp(ip,appInstance)
+        relationship = self.__getRelationshipByIp(ip,appInstance.__class__.__name__)
         if relationship is None:
             #add logging
             return
@@ -47,8 +47,8 @@ class SourceQueryService(object):
                
         conditionDict = {}
         conditionDict['force'] = relationship.force
-        conditionDict['force_table'] = appInstance.__class__.__name__
-        conditionDict['source_table'] = appBiz.__class__.__name__
+        conditionDict['force_table'] = appInstance.tableName()
+        conditionDict['source_table'] = appBiz.tableName()
                 
         bizRelationshipTuple = RelationshipManager().getRelationship(conditionDict)
         if bizRelationshipTuple is None:
@@ -62,29 +62,24 @@ class SourceQueryService(object):
             #add logging
             return
         return appBizTuple[0]
-        
-    def __getRelationshipByIp(self,ip,forceObject):
+    
+    def queryAppInstance
+    
+    
+    #Get the relationship by ip address        
+    def __getRelationshipByIp(self,ip,forceTable):
         conditionDict = {'ip':ip}
-        ipSourceTuple = IpSourceManager().getIpSourceInfo(conditionDict)
-        
+        ipSourceTuple = IpSourceManager().getIpSourceInfo(conditionDict)        
         if ipSourceTuple is None:
             #add logging
             return
-        
-        ipSource = ipSourceTuple[0]
+               
+        ipSource = ipSourceTuple[0]        
         conditionDict['source'] = ipSource.id
-        conditionDict['source_table'] = ipSource.__class__.__name__
-        conditionDict['force_table'] = forceObject.__class__.__name__        
-        relationshipTuple = RelationshipManager().getRelationship(conditionDict)
-        
+        conditionDict['source_table'] = ipSource.tableName()
+        conditionDict['force_table'] = forceTable        
+        relationshipTuple = RelationshipManager().getRelationship(conditionDict)        
         if relationshipTuple is None:
             return
+        
         return relationshipTuple[0]
-        
-    
-    
-        
-         
-        
-        
-        

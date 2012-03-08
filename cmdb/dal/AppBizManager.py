@@ -18,4 +18,6 @@ class AppBizManager(object):
     
     def getAppBizByCondition(self,conditionDict):
         condition = Q()
+        
+        if conditionDict.has_key('') 
         return
