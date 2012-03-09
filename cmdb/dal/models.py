@@ -194,17 +194,10 @@ class CMDB_AppBiz(Common):
     app_type = models.ForeignKey(CMDB_Dictionary,related_name = 'app_type_set')
     app_port = models.IntegerField()
     app_source = models.CharField(max_length = 256)
-    
-    def checkAppBizUnique(self,checkEnv,checkApp,appPort):
-        return CMDB_AppBiz.objects.filter(env = checkEnv,app = checkApp,app_port = appPort,flag = True)
-    
+
     def insertSource(self):
-        if self.checkAppBizUnique(self.env,self.app,self.app_port):
-            #add logging
-            pass
-        else:
-            self.flag = True
-            self.save()
+        self.flag = True
+        self.save()
     
     def deleteSource(self):
         try:

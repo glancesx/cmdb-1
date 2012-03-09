@@ -35,8 +35,6 @@ class RelationshipManager(object):
             getattr(sourceObject,'insertObject')(sourceObject)
             self.mountSource(forceObject,sourceObject)
             
-        
-            
     def __disRelationship(self,forceObject,sourceObject):
         relationship = CMDB_Relationship()
         relationship.force = forceObject.id
