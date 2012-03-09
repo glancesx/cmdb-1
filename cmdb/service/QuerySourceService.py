@@ -23,24 +23,24 @@ class QuerySourceService(object):
     
     def queryAppInstanceByIp(self,ip):
         appInstance = CMDB_AppInstance()
-        relationship = self.__getRelationshipByIp(ip,appInstance.__class__.__name__)
+        relationship = self.__getRelationshipByIp(ip,appInstance.tableName())
         if relationship is None:
             #add logging
             return
                
         conditionDict = {}
         conditionDict['id'] = relationship.force        
-        appInstanceTuple = AppInstanceManager().getAppInstanceInfoByCondition(conditionDict)
-        if appInstanceTuple is None:
+        appInstanceList = AppInstanceManager().getAppInstanceInfoByCondition(conditionDict)
+        if appInstanceList is None:
             #add logging
             return
         
-        return appInstanceTuple[0]
+        return appInstanceList[0]
         
     def queryAppBizByIp(self,ip):
         appBiz = CMDB_AppBiz()
         appInstance = CMDB_AppInstance()
-        relationship = self.__getRelationshipByIp(ip,appInstance)
+        relationship = self.__getRelationshipByIp(ip,appInstance.tableName())
         if relationship is None:
             #add logging
             return
@@ -50,36 +50,58 @@ class QuerySourceService(object):
         conditionDict['force_table'] = appInstance.tableName()
         conditionDict['source_table'] = appBiz.tableName()
                 
-        bizRelationshipTuple = RelationshipManager().getRelationship(conditionDict)
-        if bizRelationshipTuple is None:
+        bizRelationshipList = RelationshipManager().getRelationship(conditionDict)
+        if bizRelationshipList is None:
             #add logging
             return
         conditionDict.clear()
-        conditionDict['id'] =  bizRelationshipTuple[0].source       
-        appBizTuple = AppBizManager().getAppBizByCondition(conditionDict)
+        conditionDict['id'] =  bizRelationshipList[0].source       
+        appBizList = AppBizManager().getAppBizByCondition(conditionDict)
         
-        if appBizTuple is None:
+        if appBizList is None:
             #add logging
             return
-        return appBizTuple[0]
+        return appBizList[0]
     
-    def queryAppInstance
+    def queryAppInstanceByEnv(self,envValue,appValue,appTypeValue):
+        
+        return
     
     
     #Get the relationship by ip address        
     def __getRelationshipByIp(self,ip,forceTable):
         conditionDict = {'ip':ip}
-        ipSourceTuple = IpSourceManager().getIpSourceInfo(conditionDict)        
-        if ipSourceTuple is None:
+        ipSourceList = IpSourceManager().getIpSourceInfo(conditionDict)        
+        if ipSourceList is None:
             #add logging
             return
                
-        ipSource = ipSourceTuple[0]        
+        ipSource = ipSourceList[0]        
         conditionDict['source'] = ipSource.id
         conditionDict['source_table'] = ipSource.tableName()
         conditionDict['force_table'] = forceTable        
-        relationshipTuple = RelationshipManager().getRelationship(conditionDict)        
-        if relationshipTuple is None:
+        relationshipList = RelationshipManager().getRelationship(conditionDict)        
+        if relationshipList is None:
             return
         
-        return relationshipTuple[0]
+        return relationshipList[0]
+    
+    
+    
+    def __getRelationshipByEnv(self,envValue,appValue,appTypeValue,forceTable):
+        conditionDict = {'env':envValue,'app':appValue,'app_type':appTypeValue}
+        appBizList = AppBizManager.getAppBizByCondition(conditionDict)
+        if appBizList is None:
+            #add logging
+            return
+        
+        appBiz = appBizList[0]
+        conditionDict['source'] = appBiz.id
+        conditionDict['source_table'] = appBiz.tableName()
+        conditionDict['force_table'] = forceTable        
+        relationshipList = RelationshipManager().getRelationship(conditionDict)        
+        if relationshipList is None:
+            return
+        
+        return relationshipList[0]
+        

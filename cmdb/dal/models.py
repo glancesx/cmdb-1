@@ -225,13 +225,34 @@ class CMDB_AppBiz(Common):
             pass
     
     def setEnv(self,envValue):
-        self.env = CMDB_Dictionary.objects.get(key__iexact = envValue,key_type = 'ENV',flag = True)
+        self.env = self.getEnv(envValue)
+    
+    def getEnv(self,envValue):
+        try:
+            return CMDB_Dictionary.objects.get(key__iexact = envValue,key_type = 'ENV',flag = True)
+        except:
+            #add logging
+            return
         
     def setApp(self,appValue):
-        self.app = CMDB_Dictionary.objects.get(key__iexact = appValue,key_type = 'APP',flag = True)
+        self.app = self.getApp(appValue)
+        
+    def getApp(self,appValue):
+        try:
+            return CMDB_Dictionary.objects.get(key__iexact = appValue,key_type = 'APP',flag = True)
+        except:
+            #add logging
+            return
         
     def setAppType(self,appTypeValue):
-        self.app_type = CMDB_Dictionary.objects.get(key__iexact = appTypeValue,key_type = 'APP_TYPE',flag = True)
+        self.app_type = self.getAppType(appTypeValue)
+        
+    def getAppType(self,appTypeValue):
+        try:
+            return CMDB_Dictionary.objects.get(key__iexact = appTypeValue,key_type = 'APP_TYPE',flag = True)
+        except:
+            #add logging
+            return
     
     class Meta:
         app_label = 'dal'
