@@ -23,18 +23,16 @@ class DictionaryManager(object):
         return CMDB_Dictionary.objects.filter(condition)    
     
     #insert dictionary info and active it    
-    def insertDictionaryInfo(self,dictionaryList):
-        dictionary = CMDB_Dictionary()
-        for dictionary in dictionaryList:
-            if not dictionary.checkKeyType(dictionary.key_type):
-                #add logging
-                pass
-            elif dictionary.checkKeyUnique(dictionary.key):
-                #add logging
-                pass
-            else:
-                dictionary.flag = True 
-                dictionary.save()
+    def insertDictionaryInfo(self,dictionary):
+        if not dictionary.checkKeyType(dictionary.key_type):
+            #add logging
+            pass
+        elif dictionary.checkKeyUnique(dictionary.key):
+            #add logging
+            pass
+        else:
+            dictionary.flag = True 
+            dictionary.save()
     
     #update the dictionary info            
     def updateDictionaryInfo(self,dictionaryInfo):
