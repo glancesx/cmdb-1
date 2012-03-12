@@ -11,7 +11,7 @@ def initDictionary(DictionaryList):
         for key in keyType[1]:
             dictionary = CMDB_Dictionary()
             dictionary.key_type = keyType[0]
-            dictionary.value = key                
+            dictionary.key = key                
             DictionaryManager().insertDictionaryInfo(dictionary)
 
 

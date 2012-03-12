@@ -51,7 +51,7 @@ class CMDB_Dictionary(Common):
     
     #check the key is unique or not
     def checkKeyUnique(self,checkKey):
-        return CMDB_Dictionary.objects.filter(key__iexact = checkKey,flag = True)
+        return len(CMDB_Dictionary.objects.filter(key__iexact = checkKey,flag = True))
     
     class Meta:
         app_label = 'dal'
@@ -66,7 +66,10 @@ class CMDB_AppServer(Common):
     sn = models.CharField(max_length = 30)
         
     def checkHostNameUnique(self,hostName):                
-        return CMDB_AppServer.objects.filter(host_name__iexact = hostName,flag = True)
+        return len(CMDB_AppServer.objects.filter(host_name__iexact = hostName,flag = True))
+    
+    def getCpuType(self):
+        
     
     class Meta:
         app_label = 'dal'
@@ -80,7 +83,7 @@ class CMDB_AppInstance(Common):
     appserver_id = models.ForeignKey(CMDB_AppServer) 
     
     def checkHostNameUnique(self,hostName):
-        return CMDB_AppInstance.objects.filter(host_name__iexact = hostName,flag = True)
+        return len(CMDB_AppInstance.objects.filter(host_name__iexact = hostName,flag = True))
     
     class Meta:
         app_label = 'dal'
@@ -118,7 +121,7 @@ class CMDB_Ip_Source(Common):
             pass                
     
     def checkIpUnique(self,checkIp):
-        return CMDB_Ip_Source.objects.filter(ip = checkIp,flag = True)
+        return len(CMDB_Ip_Source.objects.filter(ip = checkIp,flag = True))
     
     class Meta:
         app_label = 'dal'
@@ -265,7 +268,7 @@ class CMDB_Relationship(Common):
     source_table = models.CharField(max_length = 32)
     
     def checkRsUnique(self,checkForce,checkForceTable,checkSource,checkSourceTable):
-        return CMDB_Relationship.objects.filter(force = checkForce,force_table = checkForceTable, source = checkSource,source_table = checkSourceTable,flag = True)
+        return len(CMDB_Relationship.objects.filter(force = checkForce,force_table = checkForceTable, source = checkSource,source_table = checkSourceTable,flag = True))
     
     class Meta:
         app_label = 'dal'
