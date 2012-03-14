@@ -6,6 +6,7 @@ Created on 2012-2-25
 '''
 from cmdb.dal.models import CMDB_Dictionary
 from django.db.models import Q
+from django.core.exceptions import ObjectDoesNotExist,MultipleObjectsReturned 
 
 class DictionaryManager(object):
     '''
@@ -47,8 +48,13 @@ class DictionaryManager(object):
             existDict = dictionaryInfo
             existDict.gmtModifier = 'system'
             existDict.save()            
-        except:
+        except MultipleObjectsReturned,e:
             #add logging
+            print MultipleObjectsReturned,":",e
+            return
+        except ObjectDoesNotExist,f:
+            #add logging
+            print ObjectDoesNotExist,":",f
             return            
     
     #delete the dictionary info        

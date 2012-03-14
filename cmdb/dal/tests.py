@@ -55,20 +55,35 @@ class DalDictionaryTest(TestCase):
         dictionary.save()
         
         dictionary.key = 'INTEL 2'
+        DictionaryManager().updateDictionaryInfo(dictionary)        
+        query = CMDB_Dictionary.objects.get(key = dictionary.key,flag = True)
+        self.assertEqual(query.key, dictionary.key)
+        self.__deleteData(dictionary)
         
-#        
-#    def test_update_fail(self):
-#        """
-#        测试修改数据失败，表中不存在对应key的数据
-#        """
-#        self.assertEqual(1 + 1, 2)
-#        
-#    def test_update_fail_flagFalse(self):
-#        """
-#        测试修改数据失败，表中存在对应key的数据且flag为False的数据
-#        """
-#        self.assertEqual(1 + 1, 2)
-#    
+    def test_update_fail(self):
+        """
+        测试修改数据失败，表中不存在对应key的数据
+        """
+        dictionary = self.__prepareData() 
+        dictionary.key = 'INTEL 2'
+        DictionaryManager().updateDictionaryInfo(dictionary)
+        query = CMDB_Dictionary.objects.filter(key = dictionary.key,flag = True)
+        self.assertEqual(len(query), 0)        
+        
+    def test_update_fail_flagFalse(self):
+        """
+        测试修改数据失败，表中存在对应key的数据且flag为False的数据
+        """
+        dictionary = self.__prepareData()
+        dictionary.flag = False
+        dictionary.save()
+        
+        dictionary.key = 'INTEL 2'
+        DictionaryManager().updateDictionaryInfo(dictionary)
+        query = CMDB_Dictionary.objects.get(key = dictionary.key)
+        self.assertNotEqual(query.key,dictionary.key)
+        self.__deleteData(dictionary)
+    
 #    def test_query_byCondition(self):
 #        """
 #        测试根据查询条件组合查询
