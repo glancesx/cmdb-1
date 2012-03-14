@@ -4,8 +4,7 @@ import datetime
 
 KEY_TYPE_CHOICES = (
                     (u'CPU_TYPE',u'cpu_type class'),
-                    (u'IP_TYPE',u'ip_type class'),
-                    (u'SERVER_TYPE',u'server_type class'),
+                    (u'IP_TYPE',u'ip_type class'),                   
                     (u'RAID',u'raid type class'),
                     (u'PATITION_TYPE',u'patition_type class'),
                     (u'ENV',u'env class'),

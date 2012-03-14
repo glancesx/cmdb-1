@@ -30,7 +30,7 @@ class DictionaryManager(object):
             #add logging
             pass
         elif dictionary.checkKeyUnique(dictionary.key):
-            #add logging            
+            #add logging                    
             pass
         else:
             dictionary.flag = True 
