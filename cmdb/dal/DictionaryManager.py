@@ -16,6 +16,8 @@ class DictionaryManager(object):
     
     def getDictionaryInfoByCondition(self,conditionDict):
         condition = Q(flag = True)
+        if conditionDict.has_key('key') and conditionDict['key'] is not None:
+            condition.add(Q(key__iexact = conditionDict['key']), Q.AND)
         if conditionDict.has_key('key_type') and conditionDict['key_type'] is not None:            
             condition.add(Q(key_type = conditionDict['key_type']), Q.AND)
         if conditionDict.has_key('value') and conditionDict['value'] is not None:            

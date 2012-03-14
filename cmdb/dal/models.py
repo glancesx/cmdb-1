@@ -68,8 +68,15 @@ class CMDB_AppServer(Common):
     def checkHostNameUnique(self,hostName):                
         return len(CMDB_AppServer.objects.filter(host_name__iexact = hostName,flag = True))
     
-    def getCpuType(self):
+    def getCpuType(self,cpuType):
+        try:
+            return CMDB_Dictionary.objects.get(key__iexact = cpuType,key_type = 'CPU_TYPE',flag = True)
+        except:
+            #add logging
+            return
         
+    def setCpuType(self,cpuType):
+        self.cpu_type = self.getCpuType(cpuType)
     
     class Meta:
         app_label = 'dal'
@@ -80,10 +87,20 @@ class CMDB_AppInstance(Common):
     host_name = models.CharField(max_length = 30)
     cpu_core = models.CharField(max_length = 30)
     memory = models.CharField(max_length = 30)
-    appserver_id = models.ForeignKey(CMDB_AppServer) 
+    appserver_id = models.ForeignKey(CMDB_AppServer)
     
     def checkHostNameUnique(self,hostName):
         return len(CMDB_AppInstance.objects.filter(host_name__iexact = hostName,flag = True))
+    
+    def getAppServerId (self,appServerId):
+        try:
+            return CMDB_AppServer.objects.get(id = appServerId,flag = True)
+        except:
+            #add logging
+            return
+    
+    def setAppServerId(self,appServerId):
+        self.appserver_id = self.getAppServerId(appServerId)
     
     class Meta:
         app_label = 'dal'
@@ -123,6 +140,15 @@ class CMDB_Ip_Source(Common):
     def checkIpUnique(self,checkIp):
         return len(CMDB_Ip_Source.objects.filter(ip = checkIp,flag = True))
     
+    def getIpType(self,ipType):
+        try:
+            return CMDB_Dictionary.objects.get(key__iexact = ipType,key_type='IP_TYPE',flag = True)
+        except:
+            #add logging
+            return
+    def setIpType(self,ipType):
+        self.ip_type = self.getIpType(ipType)
+    
     class Meta:
         app_label = 'dal'
         
@@ -156,6 +182,16 @@ class CMDB_Disc_Source(Common):
             #add logging
             pass
     
+    def getRaid(self,raidValue):
+        try:
+            return CMDB_Dictionary.objects.get(key__iexact = raidValue,key_type='RAID',flag = True)
+        except:
+            #add logging
+            return
+        
+    def setRaid(self,raidValue):
+        self.raid = self.getRaid(raidValue)
+    
     class Meta:
         app_label = 'dal'          
 
@@ -186,6 +222,16 @@ class CMDB_Disc_Patition(Common):
         except:
             #add logging
             pass
+    
+    def getPatitionType(self,patitionType):
+        try:
+            return CMDB_Dictionary.objects.get(key__iexact = patitionType,key_type='PATITION_TYPE',flag = True)
+        except:
+            #add logging
+            return
+    
+    def setPatitionType(self,patitionType):
+        self.patition_type = self.getPatitionType(patitionType)
     
     class Meta:
         app_label = 'dal'     
