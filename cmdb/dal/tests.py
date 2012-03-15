@@ -1,3 +1,4 @@
+
 # -*- coding:utf-8 -*-
 """
 This file demonstrates writing tests using the unittest module. These will pass
@@ -7,7 +8,8 @@ Replace this with more appropriate tests for your application.
 """
 
 from django.test import TestCase
-from cmdb.dal.DictionaryManager import *
+from cmdb.dal.models import CMDB_Dictionary
+from cmdb.dal.DictionaryManager import DictionaryManager
 
 class DalDictionaryTest(TestCase):
     def test_insert_success_new(self):

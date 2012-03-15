@@ -4,10 +4,11 @@ Created on 2012-3-6
 @author: zi.yez
 '''
 
-from cmdb.dal.IpSourceManager import *
-from cmdb.biz.RelationshipManager import *
-from cmdb.dal.AppInstanceManager import *
-from cmdb.dal.AppBizManager import *
+from cmdb.dal.models import CMDB_Ip_Source,CMDB_AppInstance,CMDB_AppBiz
+from cmdb.dal.IpSourceManager import IpSourceManager
+from cmdb.dal.AppInstanceManager import AppInstanceManager
+from cmdb.dal.AppBizManager import AppBizManager
+from cmdb.biz.RelationshipManager import RelationshipManager
 
 class QuerySourceManager(object):
     '''
