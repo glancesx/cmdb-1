@@ -55,8 +55,8 @@ class DalDictionaryTest(TestCase):
         dictionary.save()
         
         dictionary.key = 'INTEL 2'
+        DictionaryManager().updateDictionaryInfo(dictionary)
         
-<<<<<<< HEAD
 #        
 #    def test_update_fail(self):
 #        """
@@ -108,11 +108,3 @@ class DalDictionaryTest(TestCase):
     def __deleteData(self,dictionary):
         if len(CMDB_Dictionary.objects.filter(key = dictionary.key)):
             dictionary.delete()
-=======
-    def test_update_fail_flagFalse(self):
-        """
-        测试修改数据失败，表中存在相同key的数据且flag为False的数据
-        """
-        self.assertEqual(1 + 1, 2)
-        
->>>>>>> test.py modify
