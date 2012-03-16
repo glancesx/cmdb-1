@@ -1,3 +1,4 @@
+
 # -*- coding:utf-8 -*-
 """
 This file demonstrates writing tests using the unittest module. These will pass
@@ -7,7 +8,8 @@ Replace this with more appropriate tests for your application.
 """
 
 from django.test import TestCase
-from cmdb.dal.DictionaryManager import *
+from cmdb.dal.models import CMDB_Dictionary
+from cmdb.dal.DictionaryManager import DictionaryManager
 
 class DalDictionaryTest(TestCase):
     def test_insert_success_new(self):
@@ -55,21 +57,39 @@ class DalDictionaryTest(TestCase):
         dictionary.save()
         
         dictionary.key = 'INTEL 2'
+<<<<<<< HEAD
         DictionaryManager().updateDictionaryInfo(dictionary)
+=======
+        DictionaryManager().updateDictionaryInfo(dictionary)        
+        query = CMDB_Dictionary.objects.get(key = dictionary.key,flag = True)
+        self.assertEqual(query.key, dictionary.key)
+        self.__deleteData(dictionary)
+>>>>>>> 482faa170450a5a9c7b363a37ee7b797fb528a98
         
-#        
-#    def test_update_fail(self):
-#        """
-#        测试修改数据失败，表中不存在对应key的数据
-#        """
-#        self.assertEqual(1 + 1, 2)
-#        
-#    def test_update_fail_flagFalse(self):
-#        """
-#        测试修改数据失败，表中存在对应key的数据且flag为False的数据
-#        """
-#        self.assertEqual(1 + 1, 2)
-#    
+    def test_update_fail(self):
+        """
+        测试修改数据失败，表中不存在对应key的数据
+        """
+        dictionary = self.__prepareData() 
+        dictionary.key = 'INTEL 2'
+        DictionaryManager().updateDictionaryInfo(dictionary)
+        query = CMDB_Dictionary.objects.filter(key = dictionary.key,flag = True)
+        self.assertEqual(len(query), 0)        
+        
+    def test_update_fail_flagFalse(self):
+        """
+        测试修改数据失败，表中存在对应key的数据且flag为False的数据
+        """
+        dictionary = self.__prepareData()
+        dictionary.flag = False
+        dictionary.save()
+        
+        dictionary.key = 'INTEL 2'
+        DictionaryManager().updateDictionaryInfo(dictionary)
+        query = CMDB_Dictionary.objects.get(key = dictionary.key)
+        self.assertNotEqual(query.key,dictionary.key)
+        self.__deleteData(dictionary)
+    
 #    def test_query_byCondition(self):
 #        """
 #        测试根据查询条件组合查询

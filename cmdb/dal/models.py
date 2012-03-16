@@ -50,7 +50,7 @@ class CMDB_Dictionary(Common):
     
     #check the key is unique or not
     def checkKeyUnique(self,checkKey):
-        return len(CMDB_Dictionary.objects.filter(key__iexact = checkKey,flag = True))
+        return CMDB_Dictionary.objects.filter(key__iexact = checkKey,flag = True)
     
     class Meta:
         app_label = 'dal'
@@ -65,7 +65,7 @@ class CMDB_AppServer(Common):
     sn = models.CharField(max_length = 30)
         
     def checkHostNameUnique(self,hostName):                
-        return len(CMDB_AppServer.objects.filter(host_name__iexact = hostName,flag = True))
+        return CMDB_AppServer.objects.filter(host_name__iexact = hostName,flag = True)
     
     def getCpuType(self,cpuType):
         try:
@@ -89,7 +89,7 @@ class CMDB_AppInstance(Common):
     appserver_id = models.ForeignKey(CMDB_AppServer)
     
     def checkHostNameUnique(self,hostName):
-        return len(CMDB_AppInstance.objects.filter(host_name__iexact = hostName,flag = True))
+        return CMDB_AppInstance.objects.filter(host_name__iexact = hostName,flag = True)
     
     def getAppServerId (self,appServerId):
         try:
@@ -313,7 +313,7 @@ class CMDB_Relationship(Common):
     source_table = models.CharField(max_length = 32)
     
     def checkRsUnique(self,checkForce,checkForceTable,checkSource,checkSourceTable):
-        return len(CMDB_Relationship.objects.filter(force = checkForce,force_table = checkForceTable, source = checkSource,source_table = checkSourceTable,flag = True))
+        return CMDB_Relationship.objects.filter(force = checkForce,force_table = checkForceTable, source = checkSource,source_table = checkSourceTable,flag = True)
     
     class Meta:
         app_label = 'dal'
