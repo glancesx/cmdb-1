@@ -59,7 +59,7 @@ class CMDB_Dictionary(Common):
 # 服务器硬件资源表
 class CMDB_AppServer(Common):
     host_name = models.CharField(max_length = 30)
-    cpu_core = models.CharField(max_length = 10)
+    cpu_core = models.CharField(max_length = 30)
     cpu_type = models.ForeignKey(CMDB_Dictionary)
     memory = models.CharField(max_length = 30)
     sn = models.CharField(max_length = 30)

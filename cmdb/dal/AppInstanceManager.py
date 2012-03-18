@@ -29,16 +29,14 @@ class AppInstanceManager(object):
         
         return CMDB_AppInstance.objects.filter(condition)
     
-    def insertAppInstanceInfo(self,appInstanceList):
-        appInstance = CMDB_AppInstance()
-        for appInstance in appInstanceList:
-            if appInstance.checkHostNameUnique(appInstance.host_name):
-                #add logging
-                pass
-            #elif the foreignkey judgement ???
-            else:
-                appInstance.flag = True
-                appInstance.save()
+    def insertAppInstanceInfo(self,appInstance):
+        if appInstance.checkHostNameUnique(appInstance.host_name):
+            #add logging
+            pass
+        #elif the foreignkey judgement ???
+        else:
+            appInstance.flag = True
+            appInstance.save()
                 
     def updateAppInstanceInfo(self,appInstanceInfo):
         try:

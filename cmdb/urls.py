@@ -5,6 +5,7 @@ from django.conf.urls.defaults import patterns, include, url
 # admin.autodiscover()
 
 urlpatterns = patterns('',
+    ('^query/(?P<ip>(?:\w+\.)+\w+)/$','cmdb.webservice.views.queryInfoByIp2Web'),
     # Examples:
     # url(r'^$', 'cmdb.views.home', name='home'),
     # url(r'^cmdb/', include('cmdb.foo.urls')),

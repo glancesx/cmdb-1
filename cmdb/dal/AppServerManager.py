@@ -36,16 +36,14 @@ class AppServerManager(object):
             
         return CMDB_AppServer.objects.filter(condition)
     
-    def insertAppServerInfo(self,appServerList):
-        appServerInfo = CMDB_AppServer()
-        for appServerInfo in appServerList:
-            if appServerInfo.checkHostNameUnique(appServerInfo.host_name):
-                #add logging
-                pass            
-            else:
-                #add logging
-                appServerInfo.flag = True
-                appServerInfo.save()
+    def insertAppServerInfo(self,appServerInfo):
+        if appServerInfo.checkHostNameUnique(appServerInfo.host_name):
+            #add logging
+            pass            
+        else:
+            #add logging
+            appServerInfo.flag = True
+            appServerInfo.save()
     
     def updateAppServerInfo(self,appServerInfo):
         if not appServerInfo.checkCpuType(appServerInfo.cpu_type):

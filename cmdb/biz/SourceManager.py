@@ -24,14 +24,14 @@ class QuerySourceManager(object):
     
     def queryAppInstanceByIp(self,ip):        
         relationship = self.__getRelationshipByIp(ip)
-        if relationship is None:
+        if not relationship:
             #add logging
             return
                
         conditionDict = {}
         conditionDict['id'] = relationship.force        
         appInstanceList = AppInstanceManager().getAppInstanceInfoByCondition(conditionDict)
-        if appInstanceList is None:
+        if not appInstanceList:
             #add logging
             return
         
@@ -40,7 +40,7 @@ class QuerySourceManager(object):
     def queryAppBizByIp(self,ip):
         appBiz = CMDB_AppBiz()        
         relationship = self.__getRelationshipByIp(ip)
-        if relationship is None:
+        if not relationship:
             #add logging
             return
                
@@ -50,14 +50,14 @@ class QuerySourceManager(object):
         conditionDict['source_table'] = appBiz.tableName()
                 
         bizRelationshipList = RelationshipManager().getRelationship(conditionDict)
-        if bizRelationshipList is None:
+        if not bizRelationshipList:
             #add logging
             return
         conditionDict.clear()
         conditionDict['id'] =  bizRelationshipList[0].source       
         appBizList = AppBizManager().getAppBizByCondition(conditionDict)
         
-        if appBizList is None:
+        if not appBizList:
             #add logging
             return
         return appBizList[0]
@@ -66,7 +66,7 @@ class QuerySourceManager(object):
     def __getRelationshipByIp(self,ip):
         conditionDict = {'ip':ip}
         ipSourceList = IpSourceManager().getIpSourceInfo(conditionDict)        
-        if ipSourceList is None:
+        if not ipSourceList:
             #add logging
             return
                
@@ -76,21 +76,21 @@ class QuerySourceManager(object):
         conditionDict['source_table'] = ipSource.tableName()
         conditionDict['force_table'] = appInstance.tableName()        
         relationshipList = RelationshipManager().getRelationship(conditionDict)        
-        if relationshipList is None:
+        if not relationshipList:
             return
         
         return relationshipList[0]
     
     def queryAppInstanceByEnv(self,envValue,appValue,appTypeValue):        
         relationship = self.__getRelationshipByEnv(envValue,appValue,appTypeValue)
-        if relationship is None:
+        if not relationship:
             #add logging
             return
                
         conditionDict = {}
         conditionDict['id'] = relationship.force        
         appInstanceList = AppInstanceManager().getAppInstanceInfoByCondition(conditionDict)
-        if appInstanceList is None:
+        if not appInstanceList:
             #add logging
             return
         
@@ -98,7 +98,7 @@ class QuerySourceManager(object):
     
     def queryIpSourceByEnv(self,envValue,appValue,appTypeValue):
         relationship = self.__getRelationshipByEnv(envValue,appValue,appTypeValue)
-        if relationship is None:
+        if not relationship:
             #add logging
             return
         
@@ -109,14 +109,14 @@ class QuerySourceManager(object):
         conditionDict['source_table'] = ipSource.tableName()
         
         ipRelationship = RelationshipManager().getRelationship(conditionDict)
-        if ipRelationship is None:
+        if not ipRelationship:
             #add logging
             return
         
         conditionDict.clear()
         conditionDict['id'] = ipRelationship[0].source
         ipSourceList = IpSourceManager().getIpSourceInfo(conditionDict)
-        if ipSourceList is None:
+        if not ipSourceList:
             #add logging
             return        
         
@@ -126,7 +126,7 @@ class QuerySourceManager(object):
     def __getRelationshipByEnv(self,envValue,appValue,appTypeValue):
         conditionDict = {'env':envValue,'app':appValue,'app_type':appTypeValue}
         appBizList = AppBizManager.getAppBizByCondition(conditionDict)
-        if appBizList is None:
+        if not appBizList:
             #add logging
             return
         
@@ -136,7 +136,7 @@ class QuerySourceManager(object):
         conditionDict['source_table'] = appBiz.tableName()
         conditionDict['force_table'] = appInstance.tableName()        
         relationshipList = RelationshipManager().getRelationship(conditionDict)        
-        if relationshipList is None:
+        if not relationshipList:
             #add logging
             return
         
@@ -165,7 +165,7 @@ class UpdateSourceManager(object):
         #get CMDB_AppInstance
         conditionDict = {'id':appInstanceId}
         appInstanceList = AppInstanceManager.getAppInstanceInfoByCondition(conditionDict)
-        if appInstanceList is None:
+        if not appInstanceList:
             #add logging
             pass
         else:
@@ -191,7 +191,7 @@ class UpdateSourceManager(object):
         conditionDict['force_table'] = appInstance.tableName()
         conditionDict['source_table'] = appBiz.tableName()
         bizRelationshipList = RelationshipManager().getRelationship(conditionDict)
-        if bizRelationshipList is None:
+        if not bizRelationshipList:
             #add logging
             pass
         else:
@@ -210,7 +210,7 @@ class UpdateSourceManager(object):
         #get CMDB_AppInstance
         conditionDict = {'id':appInstanceId}
         appInstanceList = AppInstanceManager.getAppInstanceInfoByCondition(conditionDict)
-        if appInstanceList is None:
+        if not appInstanceList:
             #add logging
             pass
         else:

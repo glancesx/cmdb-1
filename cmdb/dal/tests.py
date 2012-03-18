@@ -57,20 +57,10 @@ class DalDictionaryTest(TestCase):
         dictionary.save()
         
         dictionary.key = 'INTEL 2'
-<<<<<<< HEAD
-<<<<<<< HEAD
-        DictionaryManager().updateDictionaryInfo(dictionary)
-=======
-=======
->>>>>>> 482faa170450a5a9c7b363a37ee7b797fb528a98
-        DictionaryManager().updateDictionaryInfo(dictionary)        
+        DictionaryManager().updateDictionaryInfo(dictionary)     
         query = CMDB_Dictionary.objects.get(key = dictionary.key,flag = True)
         self.assertEqual(query.key, dictionary.key)
         self.__deleteData(dictionary)
-<<<<<<< HEAD
->>>>>>> 482faa170450a5a9c7b363a37ee7b797fb528a98
-=======
->>>>>>> 482faa170450a5a9c7b363a37ee7b797fb528a98
         
     def test_update_fail(self):
         """

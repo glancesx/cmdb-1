@@ -32,7 +32,7 @@ class RelationshipManager(object):
     
     def mountAndInsertSource(self,forceObject,sourceObjectList):
         for sourceObject in sourceObjectList:
-            getattr(sourceObject,'insertObject')(sourceObject)
+            getattr(sourceObject,'insertSource')()
             self.mountSource(forceObject,sourceObject)
             
     def __disRelationship(self,forceObject,sourceObject):
@@ -53,7 +53,7 @@ class RelationshipManager(object):
     def disMountSource(self,forceObject,sourceObject):
         self.__disRelationship(forceObject, sourceObject)
         try:
-            getattr(sourceObject,'deleteSource')(sourceObject.id)
+            getattr(sourceObject,'deleteSource')()
         except:
             #add logging
             pass
