@@ -1,18 +1,27 @@
 # Create your views here.
 from django.shortcuts import render_to_response
-from cmdb.biz.SourceManager import QuerySourceManager
+from biz.SourceManager import QuerySourceManager
 
+#query appbiz&appinstance through web and return the result on web
 def queryInfoByIp2Web(request,ip):
-    #ip = request.GET['ip']
-    appBiz = QuerySourceManager().queryAppBizByIp(ip)
-    appInstance = QuerySourceManager().queryAppInstanceByIp(ip)
-    return render_to_response('query_result.html',{'appBiz':appBiz,'appInstance':appInstance})
+    if 'ip' in request.GET and request.GET['ip']:
+        rip = request.GET['ip']
+    elif ip:
+        rip = ip
+    else:
+        return
     
+    appInstance = QuerySourceManager().getAppInstanceByIp(rip)
+    appBizList = QuerySourceManager().getAppBizListByAppInstance(appInstance)    
+    return render_to_response('query_result.html',{'appBiz':appBizList[0],'appInstance':appInstance})
     
-#def queryInfoByIp2Service(request):
-#    ip = request.GET.get('ip','')
-#    appBiz = QuerySourceManager().queryAppBizByIp(ip)
-#    appInstance = QuerySourceManager().queryAppInstanceByIp(ip)
-#    return locals()
+#query appbiz&appinstance through http request and return the result to hessian
+#def queryInfoByIp2Service(request,ip):
+#    if ip:
+#        appBizList = QuerySourceManager().queryAppBizByIp(ip)
+#        appInstance = QuerySourceManager().queryAppInstanceByIp(ip)
+#        
+#    else:
+#        return
     
     

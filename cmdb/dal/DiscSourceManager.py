@@ -3,7 +3,7 @@ Created on 2012-3-2
 
 @author: zi.yez
 '''
-from cmdb.dal.models import CMDB_Disc_Source
+from dal.models import CMDB_Disc_Source
 from django.db.models import Q
 
 class DiscSourceManager(object):

@@ -1,0 +1,119 @@
+[uWSGI] using xml uwsgi id: wsgi_app
+[uWSGI] parsing config file /Users/yezi/Documents/workspace/python/cmdb/bin/../conf/deploy.xml
+*** Starting uWSGI 1.0.4 (64bit) on [Wed Apr  4 12:53:52 2012] ***
+compiled with version: 4.2.1 (Based on Apple Inc. build 5658) (LLVM build 2336.9.00) on 30 March 2012 17:46:49
+current working directory: /Users/yezi/Documents/workspace/python/cmdb/bin
+writing pidfile to /Users/yezi/Documents/workspace/python/cmdb/bin/appserver.pid
+detected binary path: /Users/yezi/develop/uwsgi-1.0.4/uwsgi
+*** WARNING: you are running uWSGI without its master process manager ***
+your memory page size is 4096 bytes
+uwsgi socket 0 bound to TCP address 0.0.0.0:8100 fd 3
+Python version: 2.7.2 (v2.7.2:8527427914a2, Jun 11 2011, 15:22:34)  [GCC 4.2.1 (Apple Inc. build 5666) (dot 3)]
+Python main interpreter initialized at 0x10040ce80
+your server socket listen backlog is limited to 100 connections
+*** Operational MODE: single process ***
+added /Users/yezi/Documents/workspace/python/cmdb/cmdb/ to pythonpath.
+WSGI application 0 (mountpoint='') ready on interpreter 0x10040ce80 pid: 12561 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI worker 1 (and the only) (pid: 12561, cores: 1)
+[pid: 12561|app: 0|req: 1/1] 127.0.0.1 () {40 vars in 730 bytes} [Tue Apr  3 23:55:16 2012] GET /cmdb/query/ip/web/125.168.120.11/ => generated 308 bytes in 463 msecs (HTTP/1.1 200) 1 headers in 59 bytes (1 switches on core 0)
+[uWSGI] using xml uwsgi id: wsgi_app
+[uWSGI] parsing config file /Users/yezi/Documents/workspace/python/cmdb/bin/../conf/deploy.xml
+*** Starting uWSGI 1.0.4 (64bit) on [Wed Apr  4 13:27:38 2012] ***
+compiled with version: 4.2.1 (Based on Apple Inc. build 5658) (LLVM build 2336.9.00) on 30 March 2012 17:46:49
+current working directory: /Users/yezi/Documents/workspace/python/cmdb/bin
+writing pidfile to /Users/yezi/Documents/workspace/python/cmdb/bin/appserver.pid
+detected binary path: /Users/yezi/develop/uwsgi-1.0.4/uwsgi
+*** WARNING: you are running uWSGI without its master process manager ***
+your memory page size is 4096 bytes
+uwsgi socket 0 bound to TCP address 0.0.0.0:8100 fd 3
+Python version: 2.7.2 (v2.7.2:8527427914a2, Jun 11 2011, 15:22:34)  [GCC 4.2.1 (Apple Inc. build 5666) (dot 3)]
+Python main interpreter initialized at 0x10040ce80
+your server socket listen backlog is limited to 100 connections
+*** Operational MODE: single process ***
+added /Users/yezi/Documents/workspace/python/cmdb/cmdb/ to pythonpath.
+WSGI application 0 (mountpoint='') ready on interpreter 0x10040ce80 pid: 12821 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI worker 1 (and the only) (pid: 12821, cores: 1)
+[uWSGI] using xml uwsgi id: wsgi_app
+[uWSGI] parsing config file /Users/yezi/Documents/workspace/python/cmdb/bin/../conf/deploy.xml
+*** Starting uWSGI 1.0.4 (64bit) on [Thu Apr  5 00:15:17 2012] ***
+compiled with version: 4.2.1 (Based on Apple Inc. build 5658) (LLVM build 2336.9.00) on 30 March 2012 17:46:49
+current working directory: /Users/yezi/Documents/workspace/python/cmdb/bin
+writing pidfile to /Users/yezi/Documents/workspace/python/cmdb/bin/appserver.pid
+detected binary path: /Users/yezi/develop/uwsgi-1.0.4/uwsgi
+*** WARNING: you are running uWSGI without its master process manager ***
+your memory page size is 4096 bytes
+probably another instance of uWSGI is running on the same address.
+bind(): Address already in use [socket.c line 598]
+[uWSGI] using xml uwsgi id: wsgi_app
+[uWSGI] parsing config file /Users/yezi/Documents/workspace/python/cmdb/bin/../conf/deploy.xml
+*** Starting uWSGI 1.0.4 (64bit) on [Thu Apr  5 00:16:37 2012] ***
+compiled with version: 4.2.1 (Based on Apple Inc. build 5658) (LLVM build 2336.9.00) on 30 March 2012 17:46:49
+current working directory: /Users/yezi/Documents/workspace/python/cmdb/bin
+writing pidfile to /Users/yezi/Documents/workspace/python/cmdb/bin/appserver.pid
+detected binary path: /Users/yezi/develop/uwsgi-1.0.4/uwsgi
+*** WARNING: you are running uWSGI without its master process manager ***
+your memory page size is 4096 bytes
+uwsgi socket 0 bound to TCP address 0.0.0.0:8100 fd 3
+Python version: 2.7.2 (v2.7.2:8527427914a2, Jun 11 2011, 15:22:34)  [GCC 4.2.1 (Apple Inc. build 5666) (dot 3)]
+Python main interpreter initialized at 0x10040ce80
+your server socket listen backlog is limited to 100 connections
+*** Operational MODE: single process ***
+added /Users/yezi/Documents/workspace/python/cmdb/cmdb/ to pythonpath.
+WSGI application 0 (mountpoint='') ready on interpreter 0x10040ce80 pid: 26112 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI worker 1 (and the only) (pid: 26112, cores: 1)
+[uWSGI] using xml uwsgi id: wsgi_app
+[uWSGI] parsing config file /Users/yezi/Documents/workspace/python/cmdb/bin/../conf/deploy.xml
+*** Starting uWSGI 1.0.4 (64bit) on [Thu Apr  5 00:34:49 2012] ***
+compiled with version: 4.2.1 (Based on Apple Inc. build 5658) (LLVM build 2336.9.00) on 30 March 2012 17:46:49
+current working directory: /Users/yezi/Documents/workspace/python/cmdb/bin
+writing pidfile to /Users/yezi/Documents/workspace/python/cmdb/bin/appserver.pid
+detected binary path: /Users/yezi/develop/uwsgi-1.0.4/uwsgi
+*** WARNING: you are running uWSGI without its master process manager ***
+your memory page size is 4096 bytes
+uwsgi socket 0 bound to TCP address 0.0.0.0:8100 fd 3
+Python version: 2.7.2 (v2.7.2:8527427914a2, Jun 11 2011, 15:22:34)  [GCC 4.2.1 (Apple Inc. build 5666) (dot 3)]
+Python main interpreter initialized at 0x10040ce80
+your server socket listen backlog is limited to 100 connections
+*** Operational MODE: single process ***
+added /Users/yezi/Documents/workspace/python/cmdb/cmdb/ to pythonpath.
+WSGI application 0 (mountpoint='') ready on interpreter 0x10040ce80 pid: 26255 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI worker 1 (and the only) (pid: 26255, cores: 1)
+Traceback (most recent call last):
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/wsgi.py", line 250, in __call__
+    self.load_middleware()
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/core/handlers/base.py", line 39, in load_middleware
+    for middleware_path in settings.MIDDLEWARE_CLASSES:
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/utils/functional.py", line 276, in __getattr__
+    self._setup()
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/conf/__init__.py", line 42, in _setup
+    self._wrapped = Settings(settings_module)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/django/conf/__init__.py", line 139, in __init__
+    logging_config_func(self.LOGGING)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/logging/config.py", line 776, in dictConfig
+    dictConfigClass(config).configure()
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/logging/config.py", line 614, in configure
+    '%r: %s' % (name, e))
+ValueError: Unable to configure logger 'django': Unable to add handler 'syslog': 'syslog'
+[pid: 26255|app: 0|req: 1/1] 127.0.0.1 () {40 vars in 730 bytes} [Wed Apr  4 11:35:09 2012] GET /cmdb/query/ip/web/125.168.120.11/ => generated 0 bytes in 81 msecs (HTTP/1.1 500) 0 headers in 0 bytes (0 switches on core 0)
+[uWSGI] using xml uwsgi id: wsgi_app
+[uWSGI] parsing config file /Users/yezi/Documents/workspace/python/cmdb/bin/../conf/deploy.xml
+*** Starting uWSGI 1.0.4 (64bit) on [Thu Apr  5 00:37:15 2012] ***
+compiled with version: 4.2.1 (Based on Apple Inc. build 5658) (LLVM build 2336.9.00) on 30 March 2012 17:46:49
+current working directory: /Users/yezi/Documents/workspace/python/cmdb/bin
+writing pidfile to /Users/yezi/Documents/workspace/python/cmdb/bin/appserver.pid
+detected binary path: /Users/yezi/develop/uwsgi-1.0.4/uwsgi
+*** WARNING: you are running uWSGI without its master process manager ***
+your memory page size is 4096 bytes
+uwsgi socket 0 bound to TCP address 0.0.0.0:8100 fd 3
+Python version: 2.7.2 (v2.7.2:8527427914a2, Jun 11 2011, 15:22:34)  [GCC 4.2.1 (Apple Inc. build 5666) (dot 3)]
+Python main interpreter initialized at 0x10040ce80
+your server socket listen backlog is limited to 100 connections
+*** Operational MODE: single process ***
+added /Users/yezi/Documents/workspace/python/cmdb/cmdb/ to pythonpath.
+WSGI application 0 (mountpoint='') ready on interpreter 0x10040ce80 pid: 26286 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI worker 1 (and the only) (pid: 26286, cores: 1)

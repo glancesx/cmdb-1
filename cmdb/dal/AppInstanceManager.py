@@ -4,7 +4,7 @@ Created on 2012-2-29
 @author: zi.yez
 '''
 from django.db.models import Q
-from cmdb.dal.models import CMDB_AppInstance
+from dal.models import CMDB_AppInstance
 
 class AppInstanceManager(object):
     '''

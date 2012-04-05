@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<all_the_apps>
+	<uwsgi id = "wsgi_app">
+		<socket>0.0.0.0:8100</socket>
+		<pidfile>/Users/yezi/Documents/workspace/python/cmdb/bin/appserver.pid</pidfile>
+		<module>wsgi_app</module>
+		<pythonpath>/Users/yezi/Documents/workspace/python/cmdb/cmdb</pythonpath> 
+	</uwsgi>
+	
+	<uwsgi id = "thrift_server">
+		<socket>0.0.0.0:9090</socket>
+		<pidfile>/Users/yezi/Documents/workspace/python/cmdb/bin/thriftserver.pid</pidfile>
+		<module>thrift_server</module>
+		<pythonpath>/Users/yezi/Documents/workspace/python/cmdb/cmdb</pythonpath>
+	</uwsgi>
+</all_the_apps>

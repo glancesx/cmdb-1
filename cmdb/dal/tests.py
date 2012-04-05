@@ -8,8 +8,9 @@ Replace this with more appropriate tests for your application.
 """
 
 from django.test import TestCase
-from cmdb.dal.models import CMDB_Dictionary
-from cmdb.dal.DictionaryManager import DictionaryManager
+from dal.models import CMDB_Dictionary
+from dal.DictionaryManager import DictionaryManager
+from django.core.exceptions import ObjectDoesNotExist
 
 class DalDictionaryTest(TestCase):
     def test_insert_success_new(self):
@@ -69,8 +70,10 @@ class DalDictionaryTest(TestCase):
         dictionary = self.__prepareData() 
         dictionary.key = 'INTEL 2'
         DictionaryManager().updateDictionaryInfo(dictionary)
+        #self.assertRaises( ObjectDoesNotExist, DictionaryManager().updateDictionaryInfo, dictionary)
         query = CMDB_Dictionary.objects.filter(key = dictionary.key,flag = True)
-        self.assertEqual(len(query), 0)        
+        self.assertEqual(len(query), 0)
+                
         
     def test_update_fail_flagFalse(self):
         """
@@ -82,8 +85,7 @@ class DalDictionaryTest(TestCase):
         
         dictionary.key = 'INTEL 2'
         DictionaryManager().updateDictionaryInfo(dictionary)
-        query = CMDB_Dictionary.objects.get(key = dictionary.key)
-        self.assertNotEqual(query.key,dictionary.key)
+        self.assertRaises( ObjectDoesNotExist, CMDB_Dictionary.objects.get, key = dictionary.key)
         self.__deleteData(dictionary)
     
 #    def test_query_byCondition(self):

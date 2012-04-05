@@ -3,7 +3,7 @@ Created on 2012-2-27
 
 @author: zi.yez
 '''
-from cmdb.dal.models import CMDB_AppServer
+from dal.models import CMDB_AppServer
 from AppInstanceManager import AppInstanceManager
 from django.db.models import Q
 

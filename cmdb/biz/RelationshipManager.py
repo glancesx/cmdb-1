@@ -3,7 +3,7 @@ Created on 2012-3-3
 
 @author: yezi
 '''
-from cmdb.dal.models import CMDB_Relationship
+from dal.models import CMDB_Relationship
 from django.db.models import Q
 
 class RelationshipManager(object):

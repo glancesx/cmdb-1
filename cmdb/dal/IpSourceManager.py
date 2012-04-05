@@ -3,7 +3,7 @@ Created on 2012-3-1
 
 @author: zi.yez
 '''
-from cmdb.dal.models import CMDB_Ip_Source
+from dal.models import CMDB_Ip_Source
 from django.db.models import Q
 
 class IpSourceManager(object):

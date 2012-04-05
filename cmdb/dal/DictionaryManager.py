@@ -4,7 +4,7 @@ Created on 2012-2-25
 
 @author: zi.yez
 '''
-from cmdb.dal.models import CMDB_Dictionary
+from dal.models import CMDB_Dictionary
 from django.db.models import Q
 from django.core.exceptions import ObjectDoesNotExist,MultipleObjectsReturned 
 

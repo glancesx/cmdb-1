@@ -110,7 +110,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
-ROOT_URLCONF = 'cmdb.urls'
+ROOT_URLCONF = 'urls'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -120,9 +120,9 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
-    'cmdb.dal',
-    'cmdb.biz',
-    'cmdb.webservice',
+    'dal',
+    'biz',
+    'webservice',
 #    'django.contrib.auth',
 #    'django.contrib.contenttypes',
 #    'django.contrib.sessions',
@@ -140,20 +140,71 @@ INSTALLED_APPS = (
 # the site admins on every HTTP 500 error.
 # See http://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
+#LOGGING = {
+#    'version': 1,
+#    'disable_existing_loggers': False,
+#    'handlers': {
+#        'mail_admins': {
+#            'level': 'ERROR',
+#            'class': 'django.utils.log.AdminEmailHandler'
+#        }
+#    },
+#    'loggers': {
+#        'django.request': {
+#            'handlers': ['mail_admins'],
+#            'level': 'ERROR',
+#            'propagate': True,
+#        },
+#    }
+#}
 LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'mail_admins': {
-            'level': 'ERROR',
-            'class': 'django.utils.log.AdminEmailHandler'
-        }
-    },
-    'loggers': {
-        'django.request': {
-            'handlers': ['mail_admins'],
-            'level': 'ERROR',
-            'propagate': True,
-        },
-    }
+     'version': 1,
+     'disable_existing_loggers': True,
+     'formatters': {
+         'simple': {
+             'format': '%(levelname)s : %(message)s'
+         },
+         'verbose': {
+             'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d : %(message)s'
+         },
+     },
+     'handlers': {
+         'null': {
+             'level': 'DEBUG',
+             'class': 'django.utils.log.NullHandler',
+         },
+         'console': {
+             'level': 'INFO',
+             'class': 'logging.StreamHandler',
+             'formatter': 'simple',
+         },
+         'file': {
+             'level': 'INFO',
+             'class': 'logging.FileHandler',
+             'formatter': 'simple',
+             'filename':  os.path.join(os.path.dirname(__file__), '../logs/all.log').replace('\\','/'), # server.common.get_abs_path('../logs/all.log'),
+             'mode': 'a',
+         },
+#         'syslog': {
+#             'class': 'logging.handlers.SysLogHandler',
+#             'facility': 33,
+#             'address': ( 
+#            env.app_config.get("salmon.server.syslog.address","127.0.0.1") , 
+#            int(env.app_config.get("salmon.server.syslog.port","514"))
+#            ) ,
+#             'formatter': 'simple',
+#         }, 
+     },
+     'loggers': {
+         'django': {
+              'handlers': ['file', 'console',],
+             'level':'INFO',
+             'propagate': True,
+         },
+     },
+ }
+
+################################## cmdb settings ############################
+THRIFTSERVICE = {
+    'port': 9090
 }

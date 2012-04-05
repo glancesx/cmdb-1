@@ -4,7 +4,7 @@ Created on 2012-3-7
 @author: zi.yez
 '''
 from django.db.models import Q
-from cmdb.dal.models import CMDB_AppBiz
+from dal.models import CMDB_AppBiz
 
 class AppBizManager(object):
     '''
