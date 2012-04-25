@@ -6,11 +6,4 @@
 		<module>wsgi_app</module>
 		<pythonpath>/Users/yezi/Documents/workspace/python/cmdb/cmdb</pythonpath> 
 	</uwsgi>
-	
-	<uwsgi id = "thrift_server">
-		<socket>0.0.0.0:9090</socket>
-		<pidfile>/Users/yezi/Documents/workspace/python/cmdb/bin/thriftserver.pid</pidfile>
-		<module>thrift_server</module>
-		<pythonpath>/Users/yezi/Documents/workspace/python/cmdb/cmdb</pythonpath>
-	</uwsgi>
 </all_the_apps>

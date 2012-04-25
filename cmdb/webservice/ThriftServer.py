@@ -10,14 +10,12 @@ from thrift.transport import TTransport
 from thrift.protocol import TBinaryProtocol
 from thrift.server import TServer
 from settings import THRIFTSERVICE
-import threading
 import logging
 
 logger = logging.getLogger(__name__)
 
-class ThriftServer(threading.Thread):
-    def __init__(self, threadname):
-        threading.Thread.__init__(self,name = threadname)
+class ThriftServer(object):
+    def __init__(self):
         self.port = THRIFTSERVICE['port']
         self.transport = TSocket.TServerSocket(self.port)
         self.tfactory = TTransport.TBufferedTransportFactory()

@@ -120,8 +120,8 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
-    'dal',
     'biz',
+    'common',
     'webservice',
 #    'django.contrib.auth',
 #    'django.contrib.contenttypes',

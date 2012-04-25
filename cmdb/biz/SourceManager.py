@@ -170,48 +170,42 @@ class UpdateSourceManager(object):
     '''
     classdocs
     '''
-
-
     def __init__(self):
         '''
         Constructor
         '''
-        
-    def createSourceAndMount(self,env,app,appType,port,appSource,appInstanceId):
-        #create AppBiz instance
+    
+    def modifyAppBizSource(self,appBizList,appInstance):
+        conditionDict = {}
+        conditionDict['force'] = appInstance.id
+        appInstance = CMDB_AppInstance()
         appBiz = CMDB_AppBiz()
-        appBiz.setEnv(env)
-        appBiz.setApp(app)
-        appBiz.setAppType(appType)
-        appBiz.app_port = port
-        appBiz.app_source = appSource                
-        #get CMDB_AppInstance
-        conditionDict = {'id':appInstanceId}
-        appInstanceList = AppInstanceManager.getAppInstanceInfoByCondition(conditionDict)
-        if not appInstanceList:
-            #add logging
-            pass
+        conditionDict['force_table'] = appInstance.tableName()
+        conditionDict['source_table'] = appBiz.tableName()
+        bizRelationshipList = RelationshipManager().getRelationship(conditionDict)
+        if not bizRelationshipList:
+            for appBiz in appBizList:
+                self.createAndMountAppBizSource(appBiz, appInstance)
         else:
-            appInstance = appInstanceList[0]
-            sourceObjectList = []
-            sourceObjectList.append(appBiz)
-            #insert into DAL_CMDB_APPBIZ
-            #insert into DAL_CMDB_RELATIONSHIP
-            RelationshipManager().mountAndInsertSource(appInstance, sourceObjectList)
+            existAppBizIdList = []
+            for bizRelationship in bizRelationshipList:
+                existAppBizIdList.append(bizRelationship.source)
+                
+            for appBiz in appBizList:
+                if appBiz.id in existAppBizIdList:
+                    self.updateAppBizSource(appBiz, appInstance)
+                else:
+                    self.createAndMountAppBizSource(appBiz, appInstance)
+    
+    def createAndMountAppBizSource(self,appBiz,appInstance):          
+        RelationshipManager().mountAndInsertSource(appInstance, appBiz)
         
-    def updateSource(self,env,app,appType,port,appSource,appInstanceId):
-        #create AppBiz instance
-        appBiz = CMDB_AppBiz()
-        appBiz.setEnv(env)
-        appBiz.setApp(app)
-        appBiz.setAppType(appType)
-        appBiz.app_port = port
-        appBiz.app_source = appSource
+    def updateAppBizSource(self,appBiz,appInstance):
         #get relationship between CMDB_AppInstance and CMDB_AppBiz
         conditionDict = {}
-        conditionDict['force'] = appInstanceId
-        appInstance = CMDB_AppInstance()
+        conditionDict['force'] = appInstance.id
         conditionDict['force_table'] = appInstance.tableName()
+        conditionDict['source_id'] = appBiz.id
         conditionDict['source_table'] = appBiz.tableName()
         bizRelationshipList = RelationshipManager().getRelationship(conditionDict)
         if not bizRelationshipList:
@@ -219,24 +213,18 @@ class UpdateSourceManager(object):
             pass
         else:
             #update CMDB_AppBiz
-            appBiz.id = bizRelationshipList[0].source
             appBiz.updateSource()
     
-    def delSource(self,env,app,appType,port,appSource,appInstanceId):
-        #create CMDB_AppBiz instance
-        appBiz = CMDB_AppBiz()
-        appBiz.setEnv(env)
-        appBiz.setApp(app)
-        appBiz.setAppType(appType)
-        appBiz.app_port = port
-        appBiz.app_source = appSource
-        #get CMDB_AppInstance
-        conditionDict = {'id':appInstanceId}
-        appInstanceList = AppInstanceManager.getAppInstanceInfoByCondition(conditionDict)
-        if not appInstanceList:
+    def delAppBizSource(self,appBiz,appInstance):
+        #get relationship between CMDB_AppInstance and CMDB_AppBiz
+        conditionDict = {}
+        conditionDict['force'] = appInstance.id
+        conditionDict['force_table'] = appInstance.tableName()
+        conditionDict['source_id'] = appBiz.id
+        conditionDict['source_table'] = appBiz.tableName()
+        bizRelationshipList = RelationshipManager().getRelationship(conditionDict)
+        if not bizRelationshipList:
             #add logging
             pass
         else:
-            #get relationship between CMDB_AppInstance and CMDB_AppBiz
-            appInstance = appInstanceList[0]
             RelationshipManager().disMountSource(appInstance, appBiz)

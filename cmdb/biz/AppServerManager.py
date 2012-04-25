@@ -12,13 +12,14 @@ class AppServerManager(object):
     '''
     classdocs
     '''
-
     def __init__(self):
         pass
     
     def getAppServerInfoByCondition(self,conditionDict):
         condition = Q(flag = True)
-             
+        
+        if conditionDict.has_key('id') and conditionDict['id'] is not None:
+            condition.add(Q(id = conditionDict['id']), Q.AND)
         if conditionDict.has_key('host_name') and conditionDict['host_name'] is not None:
             condition.add(Q(host_name__icontains = conditionDict['host_name']), Q.AND)
         if conditionDict.has_key('cpu_core') and conditionDict['cpu_core'] is not None:
